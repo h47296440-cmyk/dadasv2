@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Survive the Swarm - V7 Ultimate Action + Battle Dome</title>
+    <title>Survive the Swarm - V8 Ultimate Final Edition</title>
     <style>
         /* =========================================
            基本スタイル・UIレイヤー
@@ -12,43 +12,34 @@
         
         #ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; display: none; }
         
-        /* 経験値バー */
         #xp-bar-container { position: absolute; top: 0; left: 0; width: 100%; height: 12px; background: rgba(50, 50, 50, 0.8); box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         #xp-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #00d2ff, #3a7bd5); transition: width 0.2s ease-out; box-shadow: 0 0 10px #00d2ff; }
         
-        /* 必殺技ゲージ */
         #energy-bar-container { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); width: 400px; height: 24px; background: rgba(0,0,0,0.8); border: 2px solid #555; border-radius: 12px; overflow: hidden; box-shadow: 0 0 15px rgba(255, 153, 0, 0.3); }
         #energy-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff416c, #ff4b2b); transition: width 0.1s; }
         #energy-text { position: absolute; top: 2px; width: 100%; text-align: center; font-weight: 900; font-size: 14px; letter-spacing: 2px; text-shadow: 1px 1px 3px #000; }
         
-        /* ステータス表示 */
         #stats { position: absolute; top: 20px; left: 15px; text-shadow: 2px 2px 4px #000; font-size: 18px; font-weight: bold; line-height: 1.6; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; border: 1px solid #333; }
         
-        /* ボスHPバー */
         #boss-ui { display: none; position: absolute; top: 80px; left: 50%; transform: translateX(-50%); width: 600px; text-align: center; z-index: 10; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 10px; border: 2px solid #500; box-shadow: 0 0 30px rgba(255,0,0,0.5); }
         #boss-name { font-weight: 900; font-size: 28px; color: #ff3333; text-shadow: 0 0 10px #ff0000; letter-spacing: 5px; margin-bottom: 5px; }
         #boss-hp-container { width: 100%; height: 25px; background: #222; border: 2px solid #fff; border-radius: 15px; overflow: hidden; box-shadow: inset 0 0 10px #000; }
         #boss-hp-bar { width: 100%; height: 100%; background: linear-gradient(90deg, #800000, #ff0000, #ff9900); transition: width 0.1s ease-out; }
         
-        /* ミッション表示 */
         #mission-box { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(20, 20, 20, 0.85); padding: 15px 30px; border: 2px solid #ffcc00; border-radius: 15px; text-align: center; box-shadow: 0 0 20px rgba(255, 204, 0, 0.4); backdrop-filter: blur(5px); }
         #mission-text { font-size: 20px; font-weight: 900; color: #ffcc00; margin: 0; letter-spacing: 1px; }
         #escape-timer { font-size: 32px; font-weight: 900; color: #ff3333; display: none; margin-top: 5px; text-shadow: 0 0 15px #ff0000; }
         
-        /* テキストカラー */
         .currency { color: #ffcc00; font-weight: bold; } 
         .tp-text { color: #00ffcc; font-weight: bold; }
         
-        /* ボタン類 */
         .menu-btn { position: absolute; top: 20px; padding: 10px 20px; color: #fff; border: 2px solid #fff; border-radius: 8px; font-weight: bold; cursor: pointer; pointer-events: auto; right: 20px; background: linear-gradient(180deg, #44aaff, #0055ff); box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: 0.2s; }
         .menu-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,150,255,0.6); }
 
-        /* オーバーレイスクリーン */
         .overlay-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(20,20,20,0.95) 0%, rgba(0,0,0,0.98) 100%); display: none; flex-direction: column; justify-content: center; align-items: center; pointer-events: auto; z-index: 20; backdrop-filter: blur(10px); }
         h1 { color: #ffcc00; text-shadow: 0 0 20px #ff9900; margin-bottom: 10px; font-size: 55px; text-align: center; letter-spacing: 3px; }
         .subtitle { font-size: 20px; color: #ddd; margin-bottom: 25px; text-shadow: 1px 1px 2px #000; }
         
-        /* カードコンテナ */
         .card-container { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; max-width: 1000px; max-height: 55vh; overflow-y: auto; padding: 20px; }
         .card { background: linear-gradient(145deg, #2a2a2a, #1a1a1a); border: 2px solid #444; border-radius: 15px; width: 160px; padding: 20px; text-align: center; cursor: pointer; transition: 0.2s ease-out; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 15px rgba(0,0,0,0.5); }
         .card:hover { transform: translateY(-10px) scale(1.05); border-color: #ffcc00; box-shadow: 0 15px 25px rgba(255, 204, 0, 0.4); }
@@ -58,17 +49,17 @@
         
         .btn-large { padding: 15px 40px; font-size: 20px; cursor: pointer; font-weight: 900; background: linear-gradient(180deg, #ffcc00, #ff9900); color: #000; border: none; border-radius: 12px; margin: 15px; transition: 0.2s; box-shadow: 0 6px 15px rgba(255,153,0,0.4); text-transform: uppercase; letter-spacing: 1px; }
         .btn-large:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 20px rgba(255,153,0,0.6); }
+        .btn-share { background: linear-gradient(180deg, #00d2ff, #3a7bd5); color: #fff; }
+        .btn-share:hover { box-shadow: 0 10px 20px rgba(0,210,255,0.6); }
         
-        .stage-btn { padding: 15px 20px; font-size: 16px; font-weight: bold; background: #333; color: #fff; border: 2px solid #555; border-radius: 8px; cursor: pointer; transition: 0.2s; margin: 8px; width: 220px; }
+        .stage-btn { padding: 10px 15px; font-size: 14px; font-weight: bold; background: #333; color: #fff; border: 2px solid #555; border-radius: 8px; cursor: pointer; transition: 0.2s; margin: 5px; width: 200px; }
         .stage-btn:hover:not(:disabled) { border-color: #00ffcc; background: #444; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,255,204,0.3); }
         .stage-btn:disabled { background: #111; color: #444; cursor: not-allowed; border-color: #222; }
         
         #minimap { position: absolute; top: 20px; right: 20px; width: 160px; height: 160px; background: rgba(0,0,0,0.7); border: 3px solid #444; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
-
-        /* ホワイトアウト演出用 */
         #fade-screen { position: absolute; top:0; left:0; width:100%; height:100%; background: #fff; opacity: 0; pointer-events: none; z-index: 999; display: none; transition: opacity 2s ease-in; }
 
-        /* Mobile UI Elements */
+        /* Mobile UI */
         #mobile-controls { position: absolute; bottom: 30px; left: 0; width: 100%; height: 200px; pointer-events: none; z-index: 6; display: none; }
         #joystick-base { position: absolute; bottom: 20px; left: 30px; width: 120px; height: 120px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; pointer-events: auto; }
         #joystick-stick { position: absolute; top: 35px; left: 35px; width: 50px; height: 50px; background: rgba(255,255,255,0.5); border-radius: 50%; }
@@ -82,21 +73,20 @@
 <body>
 
 <canvas id="gameCanvas"></canvas>
-
 <div id="fade-screen"></div>
 
 <div id="home-screen" class="overlay-screen" style="display:flex;">
     <button id="ui-toggle-btn" onclick="manualToggleUI()">📱 スマホ操作切替: 自動</button>
-    <h1>SURVIVE THE SWARM<br><span style="font-size:24px; color:#00ffcc;">V7 ULTIMATE + BATTLE DOME</span></h1>
+    <h1 style="font-size: 50px;">SURVIVE THE SWARM<br><span style="font-size:24px; color:#00ffcc;" id="week-text">V8 ULTIMATE FINAL EDITION</span></h1>
     <div class="subtitle">🪙 <span id="home-coin" class="currency">0</span> | ✨TP <span id="home-tp" class="tp-text">0</span> | 👑 Global Lv <span id="home-lv" style="color:#ff55ff;">1</span></div>
     
-    <div style="max-width:1000px; text-align:center; display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 20px;" id="stage-list">
+    <div style="max-width:1100px; text-align:center; display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; max-height: 40vh; overflow-y: auto;" id="stage-list">
         </div>
     
-    <div style="display:flex; margin-top:15px; gap: 20px;">
-        <button class="btn-large" onclick="openLoadout()">🗡️ 装備編成 (15種)</button>
-        <button class="btn-large" style="background: linear-gradient(180deg, #bb66ff, #8800ff); color: #fff;" onclick="openTalent()">🧬 スキルツリー</button>
-        <button class="btn-large" style="background: linear-gradient(180deg, #ff5555, #aa0000); color: #fff;" onclick="hardReset()">⚠️ 初期化</button>
+    <div style="display:flex; margin-top:15px; gap: 15px;">
+        <button class="btn-large" onclick="openLoadout()" style="padding: 10px 20px; font-size: 16px;">🗡️ 装備編成</button>
+        <button class="btn-large" style="background: linear-gradient(180deg, #bb66ff, #8800ff); color: #fff; padding: 10px 20px; font-size: 16px;" onclick="openTalent()">🧬 ツリー</button>
+        <button class="btn-large" style="background: linear-gradient(180deg, #ff5555, #aa0000); color: #fff; padding: 10px 20px; font-size: 16px;" onclick="hardReset()">⚠️ 初期化</button>
     </div>
 </div>
 
@@ -120,33 +110,15 @@
 
 <div id="ui-layer">
     <div id="xp-bar-container"><div id="xp-bar"></div></div>
-    
     <div id="stats">
         Stg: <span id="stage-text">1</span> | Lv: <span id="level-text">1</span> | 🪙 <span id="coin-text" class="currency">0</span><br>
         <span id="pc-hint" style="font-size: 14px; color: #aaa;">[Shift] サブ発動 / [Space] 必殺技</span>
     </div>
-    
-    <div id="mission-box">
-        <p id="mission-text">MISSION: 準備中</p>
-        <p id="escape-timer">00.0</p>
-    </div>
-    
-    <div id="boss-ui">
-        <div id="boss-name">BOSS NAME</div>
-        <div id="boss-hp-container">
-            <div id="boss-hp-bar"></div>
-        </div>
-    </div>
-    
+    <div id="mission-box"><p id="mission-text">MISSION: 準備中</p><p id="escape-timer">00.0</p></div>
+    <div id="boss-ui"><div id="boss-name">BOSS</div><div id="boss-hp-container"><div id="boss-hp-bar"></div></div></div>
     <canvas id="minimap"></canvas>
-    
     <button class="menu-btn" onclick="openShop()" style="z-index: 10;">🛒 SHOP (PAUSE)</button>
-    
-    <div id="energy-bar-container">
-        <div id="energy-bar"></div>
-        <div id="energy-text">ULTIMATE</div>
-    </div>
-
+    <div id="energy-bar-container"><div id="energy-bar"></div><div id="energy-text">ULTIMATE</div></div>
     <div id="mobile-controls">
         <div id="joystick-base"><div id="joystick-stick"></div></div>
         <div id="m-btn-sub" class="m-btn" onpointerdown="keys['ShiftLeft']=true" onpointerup="keys['ShiftLeft']=false">SUB</div>
@@ -156,22 +128,23 @@
 </div>
 
 <div id="level-up-screen" class="overlay-screen">
-    <h1>LEVEL UP!</h1>
-    <div class="subtitle">装備を強化するか、回復するか選択してください (TP+1獲得)</div>
+    <h1>LEVEL UP!</h1><div class="subtitle">装備を強化するか、回復するか選択してください (TP+1獲得)</div>
     <div class="card-container" id="levelup-cards"></div>
 </div>
 
 <div id="shop-screen" class="overlay-screen">
-    <h1>SHOP</h1>
-    <p style="font-size:24px;">🪙 <span id="shop-coin" class="currency">0</span></p>
+    <h1>SHOP</h1><p style="font-size:24px;">🪙 <span id="shop-coin" class="currency">0</span></p>
     <div class="card-container" id="shop-cards"></div>
     <button class="btn-large" onclick="closeMenu()">ゲームに戻る</button>
 </div>
 
 <div id="game-over-screen" class="overlay-screen">
-    <h1 id="go-title" style="font-size: 80px;"></h1>
-    <p id="survival-time" style="font-size:28px; font-weight:bold; white-space:pre-wrap; text-align:center;"></p>
-    <button class="btn-large" onclick="location.reload()">HOMEに戻る (自動セーブ済)</button>
+    <h1 id="go-title" style="font-size: 70px;"></h1>
+    <p id="survival-time" style="font-size:26px; font-weight:bold; white-space:pre-wrap; text-align:center; margin-bottom: 30px;"></p>
+    <div style="display:flex; gap:20px;">
+        <button class="btn-large btn-share" onclick="shareScore()">📤 画像付きでシェアする</button>
+        <button class="btn-large" onclick="location.reload()">HOMEに戻る</button>
+    </div>
 </div>
 
 <script>
@@ -184,53 +157,14 @@ function initAudio(){ if(!actx) actx = new AudioContext(); if(actx.state==='susp
 
 function playSFX(type) {
     if(!actx) return; 
-    const t = actx.currentTime; 
-    const osc = actx.createOscillator(); 
-    const gn = actx.createGain(); 
-    osc.connect(gn); 
-    gn.connect(actx.destination);
+    const t = actx.currentTime, osc = actx.createOscillator(), gn = actx.createGain(); 
+    osc.connect(gn); gn.connect(actx.destination);
     
-    if(type === 'shoot') {
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(800, t);
-        osc.frequency.exponentialRampToValueAtTime(100, t + 0.1);
-        gn.gain.setValueAtTime(0.05, t);
-        gn.gain.linearRampToValueAtTime(0, t + 0.1);
-        osc.start(t); osc.stop(t + 0.1);
-    }
-    else if(type === 'hit') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(200, t);
-        osc.frequency.exponentialRampToValueAtTime(50, t + 0.15);
-        gn.gain.setValueAtTime(0.05, t);
-        gn.gain.linearRampToValueAtTime(0, t + 0.15);
-        osc.start(t); osc.stop(t + 0.15);
-    }
-    else if(type === 'level') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(440, t);
-        osc.frequency.setValueAtTime(659, t + 0.1);
-        osc.frequency.setValueAtTime(880, t + 0.2);
-        gn.gain.setValueAtTime(0.1, t);
-        gn.gain.linearRampToValueAtTime(0, t + 0.5);
-        osc.start(t); osc.stop(t + 0.5);
-    }
-    else if(type === 'explode') {
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(100, t);
-        osc.frequency.exponentialRampToValueAtTime(10, t + 0.4);
-        gn.gain.setValueAtTime(0.2, t);
-        gn.gain.exponentialRampToValueAtTime(0.01, t + 0.4);
-        osc.start(t); osc.stop(t + 0.4);
-    }
-    else if(type === 'heli') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(40, t);
-        osc.frequency.setValueAtTime(30, t + 0.1);
-        gn.gain.setValueAtTime(0.1, t);
-        gn.gain.linearRampToValueAtTime(0, t + 0.2);
-        osc.start(t); osc.stop(t + 0.2);
-    }
+    if(type === 'shoot') { osc.type = 'square'; osc.frequency.setValueAtTime(800, t); osc.frequency.exponentialRampToValueAtTime(100, t + 0.1); gn.gain.setValueAtTime(0.05, t); gn.gain.linearRampToValueAtTime(0, t + 0.1); osc.start(t); osc.stop(t + 0.1); }
+    else if(type === 'hit') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, t); osc.frequency.exponentialRampToValueAtTime(50, t + 0.15); gn.gain.setValueAtTime(0.05, t); gn.gain.linearRampToValueAtTime(0, t + 0.15); osc.start(t); osc.stop(t + 0.15); }
+    else if(type === 'level') { osc.type = 'sine'; osc.frequency.setValueAtTime(440, t); osc.frequency.setValueAtTime(659, t + 0.1); osc.frequency.setValueAtTime(880, t + 0.2); gn.gain.setValueAtTime(0.1, t); gn.gain.linearRampToValueAtTime(0, t + 0.5); osc.start(t); osc.stop(t + 0.5); }
+    else if(type === 'explode') { osc.type = 'square'; osc.frequency.setValueAtTime(100, t); osc.frequency.exponentialRampToValueAtTime(10, t + 0.4); gn.gain.setValueAtTime(0.2, t); gn.gain.exponentialRampToValueAtTime(0.01, t + 0.4); osc.start(t); osc.stop(t + 0.4); }
+    else if(type === 'heli') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(40, t); osc.frequency.setValueAtTime(30, t + 0.1); gn.gain.setValueAtTime(0.1, t); gn.gain.linearRampToValueAtTime(0, t + 0.2); osc.start(t); osc.stop(t + 0.2); }
 }
 
 // ==========================================
@@ -246,11 +180,8 @@ function updateUIAppearance() {
     if (pcHint) pcHint.style.display = activeMobile ? 'none' : 'block';
     document.getElementById('ui-toggle-btn').innerText = `📱 操作UI: ${manualUIMode.toUpperCase()}`;
 }
-
 function manualToggleUI() {
-    if(manualUIMode === 'auto') manualUIMode = 'mobile';
-    else if(manualUIMode === 'mobile') manualUIMode = 'pc';
-    else manualUIMode = 'auto';
+    manualUIMode = manualUIMode === 'auto' ? 'mobile' : (manualUIMode === 'mobile' ? 'pc' : 'auto');
     updateUIAppearance();
 }
 
@@ -271,64 +202,52 @@ if(jb && js) {
 // ==========================================
 // セーブデータ管理
 // ==========================================
-function load(key, defaultVal){
-    let v = localStorage.getItem('v7_' + key);
-    return v ? JSON.parse(v) : defaultVal;
-}
-function save(key, val){
-    localStorage.setItem('v7_' + key, JSON.stringify(val));
-}
-function hardReset(){
-    if(confirm("全てのセーブデータを消去し、初期状態に戻しますか？")){
-        localStorage.clear();
-        location.reload();
-    }
-}
+function load(key, defaultVal){ let v = localStorage.getItem('v8_' + key); return v ? JSON.parse(v) : defaultVal; }
+function save(key, val){ localStorage.setItem('v8_' + key, JSON.stringify(val)); }
+function hardReset(){ if(confirm("全てのデータを消去し、初期状態に戻しますか？")){ localStorage.clear(); location.reload(); } }
 
-let gCoins = load('coins', 0);
-let gTP = load('tp', 0);
-let gLv = load('lv', 1);
-let gXp = load('xp', 0);
-let gMaxXp = load('maxxp', 5);
-let maxStg = load('ms', 1);
-
-let gWpLv = load('wplv', {}); 
-let eqMains = load('eq_m', ['kunai', 'orb', 'mash']); 
-let eqSub = load('eq_s', 'dash'); 
-let uTalents = load('tal', {});
-let totalDamage = 0; // バトルドーム用
+let gCoins = load('coins', 0), gTP = load('tp', 0), gLv = load('lv', 1), gXp = load('xp', 0), gMaxXp = load('maxxp', 5), maxStg = load('ms', 1), gWeek = load('week', 1);
+let gWpLv = load('wplv', {}), eqMains = load('eq_m', ['kunai', 'orb', 'mash']), eqSub = load('eq_s', 'dash'), uTalents = load('tal', {});
+let totalDamage = 0;
 
 // ==========================================
-// UI初期化・ホーム画面
+// ステージ・UI初期化
 // ==========================================
 const stgNames = [
     "1: 始まりの草原 (討伐)", "2: 廃棄工場 (生存)", "3: 忘却の迷宮 (収集)", "4: 汚染区域 (巨屍)",
     "5: アンデッド墓地 (殲滅)", "6: 毒スライムの沼 (生存)", "7: 機巧都市コア (収集)", "8: 魔王の玉座 (決戦)",
-    "9: バトルドーム (スコア)"
+    "9: 焦土 (討伐)", "10: 氷結の洞窟 (生存)", "11: 幻影の迷宮 (収集)", "12: 鬼ヶ島 (鬼屍)",
+    "13: 奈落 (殲滅)", "14: 虚無の空間 (生存)", "15: 神界の遺跡 (収集)", "16: 真・魔王の玉座 (超決戦)",
+    "17: バトルドーム (スコア)"
 ];
 
 function updateHomeUI(){
-    document.getElementById('home-coin').innerText = gCoins; 
-    document.getElementById('home-tp').innerText = gTP; 
-    document.getElementById('home-lv').innerText = gLv;
+    document.getElementById('home-coin').innerText = gCoins; document.getElementById('home-tp').innerText = gTP; document.getElementById('home-lv').innerText = gLv;
+    document.getElementById('week-text').innerText = `V8 ULTIMATE FINAL - ${gWeek}周目`;
     
-    let sl = document.getElementById('stage-list'); 
-    sl.innerHTML = '';
+    let sl = document.getElementById('stage-list'); sl.innerHTML = '';
     
-    for(let i=1; i<=9; i++){
-        let b = document.createElement('button'); 
-        b.className = 'stage-btn'; 
-        b.innerText = stgNames[i-1];
-        if(i === 9) {
-            b.style.borderColor = "#ffcc00"; b.style.color = "#ffcc00";
-            b.onclick = () => startGame(9);
-        } else if(i > maxStg) {
-            b.disabled = true;
-            b.innerText += " (Locked)";
-        } else {
-            if(i === 4) b.style.borderColor = "#ff5555";
-            if(i === 8) { b.style.borderColor = "#aa00ff"; b.style.color = "#ffddff"; }
+    for(let i=1; i<=17; i++){
+        let b = document.createElement('button'); b.className = 'stage-btn'; b.innerText = stgNames[i-1];
+        if(i === 17) { b.style.borderColor = "#ffcc00"; b.style.color = "#ffcc00"; b.onclick = () => startGame(17); } 
+        else if(i > maxStg) { b.disabled = true; b.innerText += " (Locked)"; } 
+        else {
+            if(i === 4 || i === 12) b.style.borderColor = "#ff5555";
+            if(i === 8 || i === 16) { b.style.borderColor = "#aa00ff"; b.style.color = "#ffddff"; }
             b.onclick = () => startGame(i);
+        }
+        sl.appendChild(b);
+    }
+    
+    // 隠しステージ解放判定: 全48ノード解放 ＆ TP 5以上
+    let unlockedNodeCount = Object.keys(uTalents).length;
+    if(unlockedNodeCount >= 48) {
+        let b = document.createElement('button'); b.className = 'stage-btn'; b.innerText = "18: 隠しステージ (消費TP:5)";
+        b.style.borderColor = "#00ffcc"; b.style.color = "#00ffcc"; b.style.background = "#002233";
+        if(gTP >= 5) {
+            b.onclick = () => { gTP -= 5; save('tp', gTP); updateHomeUI(); startGame(18); };
+        } else {
+            b.disabled = true; b.innerText += " (TP不足)";
         }
         sl.appendChild(b);
     }
@@ -338,79 +257,33 @@ document.addEventListener('DOMContentLoaded', () => { updateUIAppearance(); upda
 // ==========================================
 // スキルツリーシステム (全48ノード)
 // ==========================================
-const talentBranches = [
-    { id:'a', n:'⚔️ 攻撃強化', t:['攻撃力+15%', '弾速+10%', '威力+20%'] },
-    { id:'d', n:'🛡️ 耐久強化', t:['最大HP+50', '移動速度+5%', '自動回復'] },
-    { id:'u', n:'✨ 補助機能', t:['獲得EXP+10%', 'アイテム吸引+20%', 'ドロップ率UP'] },
-    { id:'s', n:'⚙️ サブスキル', t:['効果量UP', 'クールダウン-10%', '必殺チャージ増'] }
-];
-
-function getTalentLevel(id){
-    let level = 0;
-    for(let i=1; i<=12; i++) {
-        if(uTalents[`${id}_${i}`]) level++;
-    }
-    return level;
-}
-
+const talentBranches = [ { id:'a', n:'⚔️ 攻撃強化', t:['攻撃力+15%', '弾速+10%', '威力+20%'] }, { id:'d', n:'🛡️ 耐久強化', t:['最大HP+50', '移動速度+5%', '自動回復'] }, { id:'u', n:'✨ 補助機能', t:['獲得EXP+10%', 'アイテム吸引+20%', 'ドロップ率UP'] }, { id:'s', n:'⚙️ サブスキル', t:['効果量UP', 'クールダウン-10%', '必殺チャージ増'] } ];
+function getTalentLevel(id){ let level = 0; for(let i=1; i<=12; i++) { if(uTalents[`${id}_${i}`]) level++; } return level; }
 function openTalent(){
-    document.getElementById('home-screen').style.display = 'none'; 
-    document.getElementById('talent-screen').style.display = 'flex'; 
-    document.getElementById('talent-tp').innerText = gTP;
-    
-    const container = document.getElementById('tree-container'); 
-    container.innerHTML = '';
-    
+    document.getElementById('home-screen').style.display = 'none'; document.getElementById('talent-screen').style.display = 'flex'; document.getElementById('talent-tp').innerText = gTP;
+    const container = document.getElementById('tree-container'); container.innerHTML = '';
     talentBranches.forEach(branch => {
-        const column = document.createElement('div'); 
-        column.style = "display:flex; flex-direction:column; gap:8px; align-items:center; min-width:120px;"; 
-        column.innerHTML = `<h3 style="margin:0; color:#ffcc00;">${branch.n}</h3>`;
-        
+        const column = document.createElement('div'); column.style = "display:flex; flex-direction:column; gap:8px; align-items:center; min-width:120px;"; column.innerHTML = `<h3 style="margin:0; color:#ffcc00;">${branch.n}</h3>`;
         for(let i=1; i<=12; i++){
-            const tId = `${branch.id}_${i}`; 
-            const prevId = i > 1 ? `${branch.id}_${i-1}` : null; 
-            
-            const node = document.createElement('div');
-            const isUnlocked = uTalents[tId];
-            const isLocked = prevId && !uTalents[prevId];
-            
-            node.style = `
-                background: ${isUnlocked ? '#114433' : '#333'};
-                border: 2px solid ${isUnlocked ? '#00ffcc' : '#555'};
-                padding: 10px; border-radius: 8px; cursor: pointer; font-size: 13px; width: 100px; text-align: center;
-                opacity: ${isLocked ? 0.4 : 1.0}; transition: 0.2s; font-weight: bold;
-                box-shadow: ${isUnlocked ? '0 0 10px rgba(0,255,204,0.5)' : 'none'};
-            `;
+            const tId = `${branch.id}_${i}`; const prevId = i > 1 ? `${branch.id}_${i-1}` : null; 
+            const node = document.createElement('div'); const isUnlocked = uTalents[tId]; const isLocked = prevId && !uTalents[prevId];
+            node.style = `background: ${isUnlocked ? '#114433' : '#333'}; border: 2px solid ${isUnlocked ? '#00ffcc' : '#555'}; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 13px; width: 100px; text-align: center; opacity: ${isLocked ? 0.4 : 1.0}; transition: 0.2s; font-weight: bold; box-shadow: ${isUnlocked ? '0 0 10px rgba(0,255,204,0.5)' : 'none'};`;
             node.innerHTML = `Tier ${i}<br><span style="font-size:11px; color:#ccc;">${branch.t[(i-1)%3]}</span>`;
-            
             node.onclick = () => {
                 initAudio();
                 if(isUnlocked) { document.getElementById('talent-desc').innerText = "既に解放済みです"; return; }
                 if(isLocked) { document.getElementById('talent-desc').innerText = "前のTierを解放してください"; return; }
                 if(gTP < 1) { document.getElementById('talent-desc').innerText = "TPが足りません！"; return; }
-                
-                gTP--; 
-                uTalents[tId] = true; 
-                save('tp', gTP); 
-                save('tal', uTalents); 
-                openTalent(); 
-                playSFX('level');
-                document.getElementById('talent-desc').innerText = `${branch.n} の Tier ${i} を解放しました！`;
+                gTP--; uTalents[tId] = true; save('tp', gTP); save('tal', uTalents); openTalent(); playSFX('level'); document.getElementById('talent-desc').innerText = `${branch.n} の Tier ${i} を解放しました！`;
             };
-            
-            if(i > 1) {
-                const line = document.createElement('div');
-                line.style = `width: 4px; height: 15px; background: ${isUnlocked ? '#00ffcc' : '#555'}; margin: -5px 0; z-index: -1; box-shadow: ${isUnlocked ? '0 0 5px #00ffcc' : 'none'};`;
-                column.appendChild(line);
-            }
+            if(i > 1) { const line = document.createElement('div'); line.style = `width: 4px; height: 15px; background: ${isUnlocked ? '#00ffcc' : '#555'}; margin: -5px 0; z-index: -1; box-shadow: ${isUnlocked ? '0 0 5px #00ffcc' : 'none'};`; column.appendChild(line); }
             column.appendChild(node);
-        } 
-        container.appendChild(column);
+        } container.appendChild(column);
     });
 }
 
 // ==========================================
-// 武器・データベース (全15種完全対応)
+// 武器・サブスキル・敵 DB
 // ==========================================
 const wpDB = {
     kunai: { n: "クナイ", t: "auto", cd: 40, dmg: 15, spd: 12, c: 1, col: "#ffffff", desc: "最も近い敵を自動で狙撃する" },
@@ -429,435 +302,211 @@ const wpDB = {
     pulse: { n: "パルス波", t: "wave", cd: 100, dmg: 40, spd: 4, p: 99, col: "#00ffff", desc: "自身を中心に広がるリング状の波" },
     shuriken: { n: "大裏剣", t: "aim", cd: 80, dmg: 60, spd: 6, p: 99, size: 20, col: "#888888", desc: "巨大でゆっくり進む無限貫通刃" }
 };
-
-const subDB = {
-    dash: { n: "ダッシュ", cd: 120, desc: "[SUB] 向いている方向へ高速移動" },
-    heal: { n: "オートヒール", cd: 300, desc: "一定時間ごとにHPが自動回復" },
-    turret: { n: "タレット設置", cd: 180, desc: "[SUB] その場に自動砲台を設置" }
-};
+const subDB = { dash: { n: "ダッシュ", cd: 120, desc: "[SUB] 向いている方向へ高速移動" }, heal: { n: "オートヒール", cd: 300, desc: "一定時間ごとにHPが自動回復" }, turret: { n: "タレット設置", cd: 180, desc: "[SUB] その場に自動砲台を設置" } };
 
 const eDB = {
     zako: { h: 15, s: 2.0, c: '#88ff88', r: 12 },
     mid: { h: 50, s: 2.8, c: '#22aa22', r: 16 },
     slime: { h: 40, s: 1.0, c: '#00aa00', r: 18 },
     ninja: { h: 30, s: 4.0, c: '#444444', r: 10 },
+    oni: { h: 100, s: 3.5, c: '#ff5555', r: 18 }, // 追加: 鬼ゾンビ
+    undead: { h: 40, s: 2.0, c: '#555555', r: 14 }, // 追加: 無限復活ゾンビ
     g_zombie: { h: 8000, s: 0.6, c: '#335533', r: 80, x: 500, n: 'GIANT ZOMBIE' },
+    g_oni: { h: 15000, s: 1.0, c: '#880000', r: 80, x: 800, n: 'GIANT ONI' }, // ステージ12用
     boss: { h: 1500, s: 1.0, c: '#ff0000', r: 40, x: 100, n: 'MUTANT BOSS' },
-    maou: { h: 6000, s: 1.5, c: '#550000', r: 50, x: 300, n: 'OVERLORD' }
+    maou: { h: 6000, s: 1.5, c: '#550000', r: 50, x: 300, n: 'OVERLORD' },
+    true_maou: { h: 50000, s: 2.0, c: '#220000', r: 60, x: 1000, n: 'TRUE OVERLORD' } // 超強化最終ボス
 };
 
 // ==========================================
-// 装備編成画面
+// 装備編成・ゲームエンジン本体
 // ==========================================
-function openLoadout(){
-    document.getElementById('home-screen').style.display = 'none';
-    document.getElementById('loadout-screen').style.display = 'flex';
-    renderLoadoutCards();
-}
-
+function openLoadout(){ document.getElementById('home-screen').style.display = 'none'; document.getElementById('loadout-screen').style.display = 'flex'; renderLoadoutCards(); }
 function renderLoadoutCards(){
-    const mc = document.getElementById('equip-main-cards'); mc.innerHTML = '';
-    const sc = document.getElementById('equip-sub-cards'); sc.innerHTML = '';
-    
+    const mc = document.getElementById('equip-main-cards'); mc.innerHTML = ''; const sc = document.getElementById('equip-sub-cards'); sc.innerHTML = '';
     for(let w in wpDB) {
-        const c = document.createElement('div');
-        const isSelected = eqMains.includes(w);
-        c.className = 'card ' + (isSelected ? 'selected' : '');
-        c.innerHTML = `
-            <div class="card-title">${wpDB[w].n} <span style="color:#00ffcc; font-size:14px;">Lv${gWpLv[w] || 1}</span></div>
-            <div class="card-desc">${wpDB[w].desc}</div>
-        `;
-        c.onclick = () => {
-            initAudio();
-            if(isSelected) eqMains = eqMains.filter(x => x !== w);
-            else if(eqMains.length < 3) eqMains.push(w);
-            save('eq_m', eqMains);
-            renderLoadoutCards();
-            playSFX('shoot');
-        };
-        mc.appendChild(c);
+        const c = document.createElement('div'); const isSelected = eqMains.includes(w); c.className = 'card ' + (isSelected ? 'selected' : '');
+        c.innerHTML = `<div class="card-title">${wpDB[w].n} <span style="color:#00ffcc; font-size:14px;">Lv${gWpLv[w] || 1}</span></div><div class="card-desc">${wpDB[w].desc}</div>`;
+        c.onclick = () => { initAudio(); if(isSelected) eqMains = eqMains.filter(x => x !== w); else if(eqMains.length < 3) eqMains.push(w); save('eq_m', eqMains); renderLoadoutCards(); playSFX('shoot'); }; mc.appendChild(c);
     }
-    
     for(let s in subDB) {
-        const c = document.createElement('div');
-        c.className = 'card ' + (eqSub === s ? 'selected' : '');
-        c.innerHTML = `
-            <div class="card-title">${subDB[s].n}</div>
-            <div class="card-desc">${subDB[s].desc}</div>
-        `;
-        c.onclick = () => {
-            initAudio();
-            eqSub = s;
-            save('eq_s', eqSub);
-            renderLoadoutCards();
-            playSFX('shoot');
-        };
-        sc.appendChild(c);
+        const c = document.createElement('div'); c.className = 'card ' + (eqSub === s ? 'selected' : '');
+        c.innerHTML = `<div class="card-title">${subDB[s].n}</div><div class="card-desc">${subDB[s].desc}</div>`;
+        c.onclick = () => { initAudio(); eqSub = s; save('eq_s', eqSub); renderLoadoutCards(); playSFX('shoot'); }; sc.appendChild(c);
     }
 }
 
-// ==========================================
-// ゲームエンジン本体
-// ==========================================
-const canvas = document.getElementById('gameCanvas'); 
-const ctx = canvas.getContext('2d'); 
-canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-const miniC = document.getElementById('minimap'); 
-const mCtx = miniC.getContext('2d');
-const keys = {}; 
-let isDown = false, mx = canvas.width/2, my = canvas.height/2;
+const canvas = document.getElementById('gameCanvas'); const ctx = canvas.getContext('2d'); canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+const miniC = document.getElementById('minimap'); const mCtx = miniC.getContext('2d');
+const keys = {}; let isDown = false, mx = canvas.width/2, my = canvas.height/2;
 
-window.addEventListener('keydown', e => keys[e.code] = true); 
-window.addEventListener('keyup', e => keys[e.code] = false);
+window.addEventListener('keydown', e => keys[e.code] = true); window.addEventListener('keyup', e => keys[e.code] = false);
 window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
 canvas.addEventListener('pointerdown', e => { 
     isDown = true; initAudio(); 
-    if(state === 'play') {
-        const activeMobile = manualUIMode === 'mobile' || (manualUIMode === 'auto' && isMobileMode);
-        if(activeMobile) {
-            // モバイル時はUIボタンを避けてタップした場合にスマッシュ発動
-            if(e.clientY < canvas.height - 200 || e.clientX > 200) player.triggerMash();
-        } else {
-            player.triggerMash();
-        }
-    }
+    if(state === 'play') { const activeMobile = manualUIMode === 'mobile' || (manualUIMode === 'auto' && isMobileMode); if(activeMobile) { if(e.clientY < canvas.height - 200 || e.clientX > 200) player.triggerMash(); } else { player.triggerMash(); } }
 }); 
 window.addEventListener('pointerup', () => { isDown = false; });
 
 let state = 'home', stg = 1, time = 0, lt = performance.now(), shake = 0;
 let enemies = [], items = [], projs = [], parts = [], dmgs = [], walls = [], convs = [], playerTrails = [];
-const cam = {x: 0, y: 0};
-const dist = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1);
-
-function emit(x, y, color, count, speed = 3) {
-    for(let i=0; i<count; i++) {
-        const a = Math.random() * Math.PI * 2;
-        const v = Math.random() * speed;
-        parts.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 20 + Math.random() * 20, color: color, size: Math.random() * 4 + 2 });
-    }
-}
-
+const cam = {x: 0, y: 0}; const dist = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1);
+function emit(x, y, color, count, speed = 3) { for(let i=0; i<count; i++) { const a = Math.random() * Math.PI * 2; const v = Math.random() * speed; parts.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 20 + Math.random() * 20, color: color, size: Math.random() * 4 + 2 }); } }
 function resolveCollision(obj) {
-    for(let w of walls) {
-        let cx = Math.max(w.x, Math.min(obj.x, w.x + w.w));
-        let cy = Math.max(w.y, Math.min(obj.y, w.y + w.h));
-        let dx = obj.x - cx;
-        let dy = obj.y - cy;
-        let ds = dx*dx + dy*dy;
-        let r2 = obj.r * obj.r;
-        if(ds < r2) { 
-            let d = Math.sqrt(ds) || 1; 
-            obj.x = cx + (dx/d) * obj.r; 
-            obj.y = cy + (dy/d) * obj.r; 
-        }
-    }
-    for(let c of convs) {
-        if(obj.x > c.x && obj.x < c.x + c.w && obj.y > c.y && obj.y < c.y + c.h) {
-            obj.x += c.dx; 
-            obj.y += c.dy;
-        }
-    }
+    for(let w of walls) { let cx = Math.max(w.x, Math.min(obj.x, w.x + w.w)); let cy = Math.max(w.y, Math.min(obj.y, w.y + w.h)); let dx = obj.x - cx; let dy = obj.y - cy; let ds = dx*dx + dy*dy; let r2 = obj.r * obj.r; if(ds < r2) { let d = Math.sqrt(ds) || 1; obj.x = cx + (dx/d) * obj.r; obj.y = cy + (dy/d) * obj.r; } }
+    for(let c of convs) { if(obj.x > c.x && obj.x < c.x + c.w && obj.y > c.y && obj.y < c.y + c.h) { obj.x += c.dx; obj.y += c.dy; } }
 }
 
 // ==========================================
-// マップ生成とミッション管理
+// マップ生成とミッション管理 (全18ステージ対応)
 // ==========================================
-let mis = { t: '', tg: 0, cur: 0, done: false };
-let heli = { act: false, x: 0, y: 0, escT: 0, scale: 1.0 };
-let heliAnim = { active: false, timer: 0 };
+let mis = { t: '', tg: 0, cur: 0, done: false }, heli = { act: false, x: 0, y: 0, escT: 0, scale: 1.0 }, heliAnim = { active: false, timer: 0 };
 
 function initMap(s){
-    walls = []; convs = []; 
-    mis = { t: '', tg: 0, cur: 0, done: false }; 
-    heli = { act: false, x: 0, y: 0, escT: 0, scale: 1.0 };
-    heliAnim = { active: false, timer: 0 };
-    totalDamage = 0; // バトルドーム用リセット
+    walls = []; convs = []; mis = { t: '', tg: 0, cur: 0, done: false }; heli = { act: false, x: 0, y: 0, escT: 0, scale: 1.0 }; heliAnim = { active: false, timer: 0 }; totalDamage = 0;
+    document.getElementById('escape-timer').style.display = 'none'; document.getElementById('boss-ui').style.display = 'none';
     
-    document.getElementById('escape-timer').style.display = 'none';
-    document.getElementById('boss-ui').style.display = 'none';
-    
+    // ステージごとの設定
     if(s === 1) { mis = { t: 'kill', tg: 50, cur: 0 }; }
-    if(s === 2) { 
-        mis = { t: 'survive', tg: 60, cur: 0 }; 
-        convs.push({x: -200, y: -50, w: 400, h: 100, dx: 3, dy: 0}); 
-        convs.push({x: -50, y: 200, w: 100, h: 400, dx: 0, dy: -3}); 
+    if(s === 2) { mis = { t: 'survive', tg: 60, cur: 0 }; convs.push({x: -200, y: -50, w: 400, h: 100, dx: 3, dy: 0}); convs.push({x: -50, y: 200, w: 100, h: 400, dx: 0, dy: -3}); }
+    if(s === 3 || s === 11 || s === 15) { // 迷路・収集系
+        mis = { t: 'item', tg: s===15?7:3, cur: 0 }; 
+        for(let x=-1200; x<=1200; x+=250) for(let y=-1200; y<=1200; y+=250) if(Math.random() < 0.4 && (Math.abs(x) > 200 || Math.abs(y) > 200)) walls.push({x: x, y: y, w: 150 + Math.random()*100, h: 150 + Math.random()*100});
+        for(let i=0; i<(s===15?7:3); i++) items.push({ x: (Math.random()>0.5?1:-1) * (500 + Math.random()*1000), y: (Math.random()>0.5?1:-1) * (500 + Math.random()*1000), t: 'key' });
     }
-    if(s === 3) {
-        mis = { t: 'item', tg: 3, cur: 0 }; 
-        for(let x=-1000; x<=1000; x+=250) {
-            for(let y=-1000; y<=1000; y+=250) {
-                if(Math.random() < 0.4 && (Math.abs(x) > 200 || Math.abs(y) > 200)) {
-                    walls.push({x: x, y: y, w: 150 + Math.random()*100, h: 150 + Math.random()*100});
-                }
-            }
-        }
-        // 【修正済】キーアイテムを確実に出現させる
-        for(let i=0; i<3; i++) {
-            items.push({ x: (Math.random()>0.5?1:-1) * (500 + Math.random()*1000), y: (Math.random()>0.5?1:-1) * (500 + Math.random()*1000), t: 'key' });
-        }
-    }
-    // 【修正済】ボスを確実に出現させる
     if(s === 4) { mis = { t: 'boss', tg: 1, cur: 0 }; enemies.push(new Enemy('g_zombie', 800, 0, 1, 1)); }
-    if(s === 5) { mis = { t: 'kill', tg: 100, cur: 0 }; }
-    if(s === 6) { mis = { t: 'survive', tg: 90, cur: 0 }; }
-    if(s === 7) { 
-        mis = { t: 'item', tg: 5, cur: 0 }; 
-        for(let i=0; i<5; i++) items.push({ x: (Math.random()-0.5)*2500, y: (Math.random()-0.5)*2500, t: 'key' }); 
-        convs.push({x: -600, y: -600, w: 1200, h: 80, dx: 5, dy: 0}); 
-        convs.push({x: -600, y: 600, w: 1200, h: 80, dx: -5, dy: 0}); 
-    }
+    if(s === 5 || s === 9 || s === 13) { mis = { t: 'kill', tg: s===13?200:100, cur: 0 }; }
+    if(s === 6 || s === 10 || s === 14) { mis = { t: 'survive', tg: s===14?120:90, cur: 0 }; }
+    if(s === 7) { mis = { t: 'item', tg: 5, cur: 0 }; for(let i=0; i<5; i++) items.push({ x: (Math.random()-0.5)*2500, y: (Math.random()-0.5)*2500, t: 'key' }); convs.push({x: -600, y: -600, w: 1200, h: 80, dx: 5, dy: 0}); convs.push({x: -600, y: 600, w: 1200, h: 80, dx: -5, dy: 0}); }
     if(s === 8) { mis = { t: 'boss', tg: 1, cur: 0 }; enemies.push(new Enemy('maou', 0, -800, 1, 1)); }
-    if(s === 9) { mis = { t: 'score', tg: 180, cur: 0 }; } // バトルドーム 180秒(3分)
+    if(s === 12) { mis = { t: 'boss', tg: 1, cur: 0 }; enemies.push(new Enemy('g_oni', 800, 0, 1, 1)); } // 巨大鬼
+    if(s === 16) { mis = { t: 'boss', tg: 1, cur: 0 }; enemies.push(new Enemy('true_maou', 0, -1000, 1, 1)); } // 真魔王
+    if(s === 17) { mis = { t: 'score', tg: 180, cur: 0 }; } // バトルドーム
+    if(s === 18) { mis = { t: 'kill', tg: 500, cur: 0 }; } // 隠しステージ: 狂気の500体討伐
 }
 
 function checkMission(){
-    if(stg === 9) {
-        mis.cur = time;
-        document.getElementById('mission-text').innerText = `BATTLE DOME - 残り: ${Math.max(0, mis.tg - mis.cur).toFixed(1)}s\nTOTAL DMG: ${Math.floor(totalDamage)}`;
-        if(mis.cur >= mis.tg && !mis.done) {
-            mis.done = true;
-            gameOver(`TIME UP!\nTOTAL DMG: ${Math.floor(totalDamage)}`, true);
-        }
-        return;
+    if(stg === 17) {
+        mis.cur = time; document.getElementById('mission-text').innerText = `BATTLE DOME - 残り: ${Math.max(0, mis.tg - mis.cur).toFixed(1)}s\nTOTAL DMG: ${Math.floor(totalDamage)}`;
+        if(mis.cur >= mis.tg && !mis.done) { mis.done = true; gameOver(`TIME UP!\nTOTAL DMG: ${Math.floor(totalDamage)}`, true); } return;
     }
 
     let txt = `MISSION: `;
     if(!mis.done){
-        if(mis.t === 'kill') txt += `敵討伐 ${mis.cur} / ${mis.tg}`;
-        if(mis.t === 'survive') txt += `生存 ${(mis.tg - mis.cur).toFixed(1)}s`;
-        if(mis.t === 'item') txt += `キー回収 ${mis.cur} / ${mis.tg}`;
-        if(mis.t === 'boss') txt += `対象ボスを撃破せよ`;
-        
-        if(mis.t === 'survive' && mis.cur >= mis.tg) mis.done = true;
-        if(mis.t === 'kill' && mis.cur >= mis.tg) mis.done = true;
-        if(mis.t === 'item' && mis.cur >= mis.tg) mis.done = true;
-        if(mis.t === 'boss' && mis.cur >= mis.tg) mis.done = true;
-        
+        if(mis.t === 'kill') txt += `敵討伐 ${mis.cur} / ${mis.tg}`; if(mis.t === 'survive') txt += `生存 ${(mis.tg - mis.cur).toFixed(1)}s`; if(mis.t === 'item') txt += `キー回収 ${mis.cur} / ${mis.tg}`; if(mis.t === 'boss') txt += `対象ボスを撃破せよ`;
+        if(mis.t === 'survive' && mis.cur >= mis.tg) mis.done = true; if(mis.t === 'kill' && mis.cur >= mis.tg) mis.done = true; if(mis.t === 'item' && mis.cur >= mis.tg) mis.done = true; if(mis.t === 'boss' && mis.cur >= mis.tg) mis.done = true;
         document.getElementById('mission-text').innerText = txt;
         
         if(mis.done){
-            heli.act = true; 
-            heli.x = player.x + Math.cos(Math.random()*Math.PI*2) * 1000; 
-            heli.y = player.y + Math.sin(Math.random()*Math.PI*2) * 1000; 
-            heli.escT = 60;
-            document.getElementById('mission-text').innerText = "MISSION CLEAR! 脱出ヘリ(緑H)へ急げ！";
-            document.getElementById('mission-box').style.borderColor = "#00ffcc";
-            document.getElementById('escape-timer').style.display = 'block'; 
-            playSFX('explode');
+            heli.act = true; heli.x = player.x + Math.cos(Math.random()*Math.PI*2) * 1000; heli.y = player.y + Math.sin(Math.random()*Math.PI*2) * 1000; heli.escT = 60;
+            document.getElementById('mission-text').innerText = "MISSION CLEAR! 脱出ヘリ(緑H)へ急げ！"; document.getElementById('mission-box').style.borderColor = "#00ffcc"; document.getElementById('escape-timer').style.display = 'block'; playSFX('explode');
         }
     } else {
-        heli.escT -= 1/60; 
-        document.getElementById('escape-timer').innerText = `残り ${heli.escT.toFixed(1)} 秒`;
+        heli.escT -= 1/60; document.getElementById('escape-timer').innerText = `残り ${heli.escT.toFixed(1)} 秒`;
         if(Math.random() < 0.1) playSFX('heli');
-        
-        if(heli.escT <= 0 && !heliAnim.active) {
-            gameOver("TIME OVER", false);
-        }
-        if(!heliAnim.active && dist(player.x, player.y, heli.x, heli.y) < 60) {
-            heliAnim.active = true;
-            heliAnim.timer = 0;
-            enemies = []; projs = [];
-            document.getElementById('escape-timer').style.display = 'none';
-            document.getElementById('mission-text').innerText = "ESCAPING...";
-        }
+        if(heli.escT <= 0 && !heliAnim.active) { gameOver("TIME OVER", false); }
+        if(!heliAnim.active && dist(player.x, player.y, heli.x, heli.y) < 60) { heliAnim.active = true; heliAnim.timer = 0; enemies = []; projs = []; document.getElementById('escape-timer').style.display = 'none'; document.getElementById('mission-text').innerText = "ESCAPING..."; }
     }
 }
 
 // ==========================================
-// プレイヤークラス
+// プレイヤー、敵、弾クラス
 // ==========================================
 class Player {
     constructor(){
-        this.x = 0; this.y = 0; this.r = 15; 
-        this.atkMulti = 1.0 + (getTalentLevel('a') * 0.15); 
-        this.maxHp = 300 + (getTalentLevel('d') * 50); this.hp = this.maxHp; 
-        this.baseSpeed = 4.5 + (getTalentLevel('d') * 0.2); this.spd = this.baseSpeed;
-        this.en = 0; this.mEn = 40 - (getTalentLevel('s') * 1); 
-        
-        this.w = {}; this.ws = {}; 
-        eqMains.forEach(k => { this.w[k] = gWpLv[k] || 1; this.ws[k] = { t: 0, a: 0 }; });
-        
+        this.x = 0; this.y = 0; this.r = 15; this.atkMulti = 1.0 + (getTalentLevel('a') * 0.15); this.maxHp = 300 + (getTalentLevel('d') * 50); this.hp = this.maxHp; this.baseSpeed = 4.5 + (getTalentLevel('d') * 0.2); this.spd = this.baseSpeed;
+        this.en = 0; this.mEn = 40 - (getTalentLevel('s') * 1); this.w = {}; this.ws = {}; eqMains.forEach(k => { this.w[k] = gWpLv[k] || 1; this.ws[k] = { t: 0, a: 0 }; });
         this.sub = eqSub; this.subTimer = 0; this.dashTimer = 0; this.regen = getTalentLevel('d') > 5;
     }
-    
     update(){
         if(heliAnim.active) return;
+        if(this.dashTimer > 0) { this.spd = this.baseSpeed * 3; this.dashTimer--; emit(this.x, this.y, '#ffffff', 1, 0); } else { this.spd = this.baseSpeed; }
         
-        if(this.dashTimer > 0) { this.spd = this.baseSpeed * 3; this.dashTimer--; emit(this.x, this.y, '#ffffff', 1, 0); } 
-        else { this.spd = this.baseSpeed; }
-        
-        let dx=0, dy=0; 
-        const activeMobile = manualUIMode === 'mobile' || (manualUIMode === 'auto' && isMobileMode);
-        if(activeMobile && joy.active){ dx = joy.dx; dy = joy.dy; }
-        else {
-            if(keys['KeyW'] || keys['ArrowUp']) dy -= 1;
-            if(keys['KeyS'] || keys['ArrowDown']) dy += 1;
-            if(keys['KeyA'] || keys['ArrowLeft']) dx -= 1;
-            if(keys['KeyD'] || keys['ArrowRight']) dx += 1;
-            if(dx || dy) { const l = Math.hypot(dx, dy); dx /= l; dy /= l; }
-        }
-        
-        this.x += dx * this.spd; this.y += dy * this.spd;
-        if((dx || dy) && time % 0.1 < 0.02) playerTrails.push({x: this.x, y: this.y, life: 10});
-        resolveCollision(this);
-        
+        let dx=0, dy=0; const activeMobile = manualUIMode === 'mobile' || (manualUIMode === 'auto' && isMobileMode);
+        if(activeMobile && joy.active){ dx = joy.dx; dy = joy.dy; } else { if(keys['KeyW'] || keys['ArrowUp']) dy -= 1; if(keys['KeyS'] || keys['ArrowDown']) dy += 1; if(keys['KeyA'] || keys['ArrowLeft']) dx -= 1; if(keys['KeyD'] || keys['ArrowRight']) dx += 1; if(dx || dy) { const l = Math.hypot(dx, dy); dx /= l; dy /= l; } }
+        this.x += dx * this.spd; this.y += dy * this.spd; if((dx || dy) && time % 0.1 < 0.02) playerTrails.push({x: this.x, y: this.y, life: 10}); resolveCollision(this);
         if(this.regen && Math.random() < 0.02) this.hp = Math.min(this.maxHp, this.hp + 1);
-        
-        this.handleWeapons(); 
-        this.handleSubWeapon();
-        
-        if(keys['Space'] && this.en >= this.mEn) {
-            this.en = 0; document.getElementById('energy-bar').style.width = '0%'; shake = 40; 
-            emit(this.x, this.y, '#ffff00', 100, 20); playSFX('explode');
-            enemies.forEach(e => { if(dist(this.x, this.y, e.x, e.y) < 1200) e.takeDmg(1500 * this.atkMulti); });
-        }
+        this.handleWeapons(); this.handleSubWeapon();
+        if(keys['Space'] && this.en >= this.mEn) { this.en = 0; document.getElementById('energy-bar').style.width = '0%'; shake = 40; emit(this.x, this.y, '#ffff00', 100, 20); playSFX('explode'); enemies.forEach(e => { if(dist(this.x, this.y, e.x, e.y) < 1200) e.takeDmg(1500 * this.atkMulti); }); }
     }
-    
     handleWeapons(){
-        const activeMobile = manualUIMode === 'mobile' || (manualUIMode === 'auto' && isMobileMode);
-        const tx = activeMobile ? (player.x + joy.dx * 100) : (mx + cam.x);
-        const ty = activeMobile ? (player.y + joy.dy * 100) : (my + cam.y);
-        
+        const activeMobile = manualUIMode === 'mobile' || (manualUIMode === 'auto' && isMobileMode); const tx = activeMobile ? (player.x + joy.dx * 100) : (mx + cam.x), ty = activeMobile ? (player.y + joy.dy * 100) : (my + cam.y);
         for(let k in this.w) {
-            const lv = this.w[k]; const d = wpDB[k]; const st = this.ws[k]; st.t++; 
-            let cd = d.cd > 0 ? Math.max(5, d.cd * Math.pow(0.85, lv - 1)) : 0; 
-            const dmg = d.dmg * this.atkMulti * (1 + (lv - 1) * 0.3);
-            
-            if(d.t === 'orbit') {
-                st.a += d.rot; const count = (d.c || 1) + lv - 1;
-                for(let i=0; i<count; i++){
-                    let ox = this.x + Math.cos(st.a + (Math.PI*2/count)*i) * d.rad;
-                    let oy = this.y + Math.sin(st.a + (Math.PI*2/count)*i) * d.rad;
-                    if(Math.random() < 0.3) enemies.forEach(e => { if(dist(ox, oy, e.x, e.y) < 15 + e.r) e.takeDmg(dmg); });
-                }
-            } 
-            else if(d.t === 'aura') {
-                if(st.t > cd) {
-                    st.t = 0; emit(this.x, this.y, d.col, 5, 2);
-                    enemies.forEach(e => { if(dist(this.x, this.y, e.x, e.y) < d.rad + (lv * 15)) e.takeDmg(dmg); });
-                }
-            } 
+            const lv = this.w[k]; const d = wpDB[k]; const st = this.ws[k]; st.t++; let cd = d.cd > 0 ? Math.max(5, d.cd * Math.pow(0.85, lv - 1)) : 0; const dmg = d.dmg * this.atkMulti * (1 + (lv - 1) * 0.3);
+            if(d.t === 'orbit') { st.a += d.rot; const count = (d.c || 1) + lv - 1; for(let i=0; i<count; i++){ let ox = this.x + Math.cos(st.a + (Math.PI*2/count)*i) * d.rad, oy = this.y + Math.sin(st.a + (Math.PI*2/count)*i) * d.rad; enemies.forEach(e => { if(dist(ox, oy, e.x, e.y) < 22) { if(st.t % 10 === 0) e.takeDmg(dmg/3); } }); } } 
+            else if(d.t === 'aura') { if(st.t > cd) { st.t = 0; emit(this.x, this.y, d.col, 5, 2); enemies.forEach(e => { if(dist(this.x, this.y, e.x, e.y) < d.rad + (lv * 15)) e.takeDmg(dmg); }); } } 
             else if(st.t >= cd && cd > 0) {
-                if((d.t === 'h_cone' || d.t === 'h_aim') && !isDown && !activeMobile) continue; 
-                st.t = 0; let angle = Math.atan2(ty - this.y, tx - this.x); let count = (d.c || 1) + Math.floor((lv - 1) / 2);
-                
-                if(d.t === 'auto' || d.t === 'smite') {
-                    let tg = null, md = 600;
-                    enemies.forEach(e => { let di = dist(this.x, this.y, e.x, e.y); if(di < md) { md = di; tg = e; } });
-                    if(!tg) continue; 
-                    if(d.t === 'smite') { emit(tg.x, tg.y, d.col, 30, 8); tg.takeDmg(dmg); playSFX('hit'); continue; } 
-                    angle = Math.atan2(tg.y - this.y, tg.x - this.x);
-                }
-                playSFX('shoot'); 
-                if(d.t === 's_blast') { projs.push(new Proj(this.x, this.y, 0, d, dmg, lv)); continue; }
-                
-                for(let i=0; i<count; i++){
-                    let pa = angle;
-                    if(d.sp) pa += (Math.random() - 0.5) * d.sp; 
-                    else if(count > 1) pa += (i - (count - 1) / 2) * 0.15; 
-                    projs.push(new Proj(this.x, this.y, pa, d, dmg, lv));
-                }
+                if((d.t === 'h_cone' || d.t === 'h_aim') && !isDown && !activeMobile) continue; st.t = 0; let angle = Math.atan2(ty - this.y, tx - this.x); let count = (d.c || 1) + Math.floor((lv - 1) / 2);
+                if(d.t === 'auto' || d.t === 'smite') { let tg = null, md = 600; enemies.forEach(e => { let di = dist(this.x, this.y, e.x, e.y); if(di < md) { md = di; tg = e; } }); if(!tg) continue; if(d.t === 'smite') { emit(tg.x, tg.y, d.col, 30, 8); tg.takeDmg(dmg); playSFX('hit'); continue; } angle = Math.atan2(tg.y - this.y, tg.x - this.x); }
+                playSFX('shoot'); if(d.t === 's_blast') { projs.push(new Proj(this.x, this.y, 0, d, dmg, lv)); continue; }
+                for(let i=0; i<count; i++){ let pa = angle; if(d.sp) pa += (Math.random() - 0.5) * d.sp; else if(count > 1) pa += (i - (count - 1) / 2) * 0.15; projs.push(new Proj(this.x, this.y, pa, d, dmg, lv)); }
             }
         }
     }
-    
-    triggerMash(){
-        for(let k in this.w) {
-            if(wpDB[k].t === 'mash') {
-                const lv = this.w[k]; const dmg = wpDB[k].dmg * this.atkMulti * lv; const r = wpDB[k].rad + lv * 10;
-                emit(this.x, this.y, wpDB[k].col, 20, 8);
-                enemies.forEach(e => { if(dist(this.x, this.y, e.x, e.y) < r) e.takeDmg(dmg); });
-                playSFX('explode');
-            }
-        }
-    }
-    
+    triggerMash(){ for(let k in this.w) { if(wpDB[k].t === 'mash') { const lv = this.w[k]; const dmg = wpDB[k].dmg * this.atkMulti * lv; const r = wpDB[k].rad + lv * 10; emit(this.x, this.y, wpDB[k].col, 20, 8); enemies.forEach(e => { if(dist(this.x, this.y, e.x, e.y) < r) e.takeDmg(dmg); }); playSFX('explode'); } } }
     handleSubWeapon(){
         this.subTimer++; const sLv = getTalentLevel('s'); const cd = subDB[this.sub].cd * Math.pow(0.9, sLv);
-        if(this.sub === 'heal' && this.subTimer >= cd) {
-            this.subTimer = 0; this.hp = Math.min(this.maxHp, this.hp + 20 + (sLv * 5));
-            emit(this.x, this.y, '#00ff00', 20, 2); playSFX('level');
-        } 
-        else if((keys['ShiftLeft'] || keys['ShiftRight']) && this.subTimer >= cd) {
-            this.subTimer = 0;
-            if(this.sub === 'dash') { this.dashTimer = 15 + (sLv * 2); emit(this.x, this.y, '#ffffff', 40, 10); playSFX('shoot'); } 
-            else if(this.sub === 'turret') { projs.push(new Proj(this.x, this.y, 0, { t: 'aim', spd: 0, p: 99, life: 300 + (sLv * 30), col: '#aaaaaa', isT: true }, 20 * this.atkMulti, 1)); }
-        }
+        if(this.sub === 'heal' && this.subTimer >= cd) { this.subTimer = 0; this.hp = Math.min(this.maxHp, this.hp + 20 + (sLv * 5)); emit(this.x, this.y, '#00ff00', 20, 2); playSFX('level'); } 
+        else if((keys['ShiftLeft'] || keys['ShiftRight']) && this.subTimer >= cd) { this.subTimer = 0; if(this.sub === 'dash') { this.dashTimer = 15 + (sLv * 2); emit(this.x, this.y, '#ffffff', 40, 10); playSFX('shoot'); } else if(this.sub === 'turret') { projs.push(new Proj(this.x, this.y, 0, { t: 'aim', spd: 0, p: 99, life: 300 + (sLv * 30), col: '#aaaaaa', isT: true }, 20 * this.atkMulti, 1)); } }
     }
-    
     draw(c){
         if(heliAnim.active) return;
         playerTrails.forEach(t => { c.beginPath(); c.arc(t.x, t.y, this.r, 0, Math.PI*2); c.fillStyle = `rgba(0, 255, 204, ${t.life / 20})`; c.fill(); });
-        
-        if(this.w['orb']) {
-            const count = (wpDB['orb'].c || 1) + this.w['orb'] - 1; c.fillStyle = wpDB['orb'].col; c.shadowBlur = 10; c.shadowColor = wpDB['orb'].col;
-            for(let i=0; i<count; i++){ c.beginPath(); c.arc(this.x + Math.cos(this.ws['orb'].a + (Math.PI*2/count)*i)*70, this.y + Math.sin(this.ws['orb'].a + (Math.PI*2/count)*i)*70, 6, 0, Math.PI*2); c.fill(); }
-            c.shadowBlur = 0;
-        }
+        if(this.w['orb']) { const count = (wpDB['orb'].c || 1) + this.w['orb'] - 1; c.fillStyle = wpDB['orb'].col; c.shadowBlur = 10; c.shadowColor = wpDB['orb'].col; for(let i=0; i<count; i++){ c.beginPath(); c.arc(this.x + Math.cos(this.ws['orb'].a + (Math.PI*2/count)*i)*70, this.y + Math.sin(this.ws['orb'].a + (Math.PI*2/count)*i)*70, 6, 0, Math.PI*2); c.fill(); } c.shadowBlur = 0; }
         if(this.w['poison']) { c.fillStyle = wpDB['poison'].col; c.globalAlpha = 0.2; c.beginPath(); c.arc(this.x, this.y, 100 + this.w['poison'] * 15, 0, Math.PI*2); c.fill(); c.globalAlpha = 1.0; }
-        
-        c.beginPath(); c.arc(this.x, this.y, this.r, 0, Math.PI*2);
-        c.fillStyle = this.dT > 0 ? '#00ffcc' : '#ffffff'; c.shadowBlur = 15; c.shadowColor = c.fillStyle; c.fill(); c.shadowBlur = 0;
-        c.strokeStyle = '#333'; c.stroke();
-        
+        c.beginPath(); c.arc(this.x, this.y, this.r, 0, Math.PI*2); c.fillStyle = this.dT > 0 ? '#00ffcc' : '#ffffff'; c.shadowBlur = 15; c.shadowColor = c.fillStyle; c.fill(); c.shadowBlur = 0; c.strokeStyle = '#333'; c.stroke();
         c.fillStyle = '#ff0000'; c.fillRect(this.x - 20, this.y + 25, 40, 5); c.fillStyle = '#00ff00'; c.fillRect(this.x - 20, this.y + 25, 40 * (this.hp / this.maxHp), 5);
     }
-    
     addXp(v){
-        gXp += v * (1 + getTalentLevel('u') * 0.1);
-        if(gXp >= gMaxXp) {
-            gXp -= gMaxXp; gLv++; gMaxXp = Math.floor(gMaxXp * 1.3); save('lv', gLv); save('maxxp', gMaxXp); gTP++; save('tp', gTP); 
-            document.getElementById('level-text').innerText = gLv; triggerLvUp(); 
-        }
+        gXp += v * (1 + getTalentLevel('u') * 0.1); if(gXp >= gMaxXp) { gXp -= gMaxXp; gLv++; gMaxXp = Math.floor(gMaxXp * 1.3); save('lv', gLv); save('maxxp', gMaxXp); gTP++; save('tp', gTP); document.getElementById('level-text').innerText = gLv; triggerLvUp(); }
         save('xp', gXp); document.getElementById('xp-bar').style.width = `${(gXp / gMaxXp) * 100}%`;
     }
 }
 
-// ==========================================
-// 敵クラス
-// ==========================================
 class Enemy {
     constructor(t, x, y, hm, sm){
-        this.t = t; this.x = x; this.y = y; const b = eDB[t];
-        this.hp = b.h * hm; this.mhp = this.hp; this.spd = b.s * sm; this.c = b.c; this.r = b.r; this.tm = 0;
+        this.t = t; this.x = x; this.y = y; const b = eDB[t]; const loopHP = 1 + (gWeek - 1) * 0.5; const loopSPD = 1 + (gWeek - 1) * 0.1;
+        this.hp = b.h * hm * loopHP; this.mhp = this.hp; this.spd = b.s * sm * loopSPD; this.c = b.c; this.r = b.r; this.tm = 0;
     }
-    
     update(){
         this.tm++; const a = Math.atan2(player.y - this.y, player.x - this.x); const d = dist(this.x, this.y, player.x, player.y);
         this.x += Math.cos(a) * this.spd; this.y += Math.sin(a) * this.spd; resolveCollision(this);
         
-        if((this.t === 'boss' || this.t === 'maou' || this.t === 'g_zombie') && this.hp < this.mhp / 2 && this.tm % 60 === 0) {
-            playSFX('shoot'); const ways = this.t === 'maou' ? 16 : 8;
+        // ボス発狂
+        if((this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'g_zombie' || this.t === 'g_oni') && this.hp < this.mhp / 2 && this.tm % 60 === 0) {
+            playSFX('shoot'); const ways = (this.t === 'maou' || this.t === 'true_maou') ? 16 : 8;
             for(let i=0; i<ways; i++) { projs.push(new Proj(this.x, this.y, (Math.PI*2/ways)*i + this.tm, {t:'aim', spd:5, col:'#ff00ff', isE:true}, 20, 1)); }
         }
         
+        // 接触
         if(d < this.r + player.r && !heliAnim.active) {
-            player.hp -= (this.t === 'g_zombie' || this.t === 'maou') ? 20 : 5;
+            player.hp -= (this.t === 'g_zombie' || this.t === 'maou' || this.t === 'g_oni' || this.t === 'true_maou') ? 20 : 5;
             if(player.hp <= 0) gameOver("GAME OVER", false);
             this.x -= Math.cos(a) * 20; this.y -= Math.sin(a) * 20;
         }
     }
-    
     draw(c){
         c.beginPath(); c.arc(this.x, this.y, this.r, 0, Math.PI*2);
-        if(this.t === 'boss' || this.t === 'maou' || this.t === 'g_zombie') { c.shadowBlur = 20; c.shadowColor = this.c; }
+        if(this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'g_zombie' || this.t === 'g_oni') { c.shadowBlur = 20; c.shadowColor = this.c; }
         c.fillStyle = this.c; c.fill(); c.shadowBlur = 0;
     }
-    
     takeDmg(amt){
-        this.hp -= amt; 
-        if(stg === 9) totalDamage += amt;
-        dmgs.push({x: this.x, y: this.y, t: Math.floor(amt), l: 20});
+        this.hp -= amt; if(stg === 17) totalDamage += amt; dmgs.push({x: this.x, y: this.y, t: Math.floor(amt), l: 20});
         
         if(this.hp <= 0) {
-            emit(this.x, this.y, this.c, (this.t === 'boss' || this.t === 'maou' || this.t === 'g_zombie') ? 50 : 10); playSFX('hit'); 
+            emit(this.x, this.y, this.c, (this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'g_zombie' || this.t === 'g_oni') ? 50 : 10); playSFX('hit'); 
             player.en = Math.min(player.mEn, player.en + 1); document.getElementById('energy-bar').style.width = `${(player.en / player.mEn) * 100}%`;
             
+            // 無限復活ゾンビの処理: ダミーエフェクトを出して復活する
+            if(this.t === 'undead') {
+                setTimeout(() => { if(state === 'play') enemies.push(new Enemy('undead', this.x, this.y, 1, 1)); }, 3000);
+            }
+
             if(mis.t === 'kill' && !mis.done) mis.cur++;
-            if(mis.t === 'boss' && !mis.done && (this.t === 'boss' || this.t === 'maou' || this.t === 'g_zombie')) mis.cur++;
+            if(mis.t === 'boss' && !mis.done && (this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'g_zombie' || this.t === 'g_oni')) mis.cur++;
             
             const expVal = eDB[this.t].x || 2;
-            if(this.t === 'boss' || this.t === 'maou' || this.t === 'g_zombie') { gCoins += 100; for(let i=0; i<10; i++) items.push({x: this.x + (Math.random()-0.5)*50, y: this.y + (Math.random()-0.5)*50, t: 'xp', v: expVal}); } 
+            if(this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'g_zombie' || this.t === 'g_oni') { gCoins += 100; for(let i=0; i<10; i++) items.push({x: this.x + (Math.random()-0.5)*50, y: this.y + (Math.random()-0.5)*50, t: 'xp', v: expVal}); } 
             else { if(Math.random() < 0.05) items.push({x: this.x, y: this.y, t: 'c'}); else items.push({x: this.x, y: this.y, t: 'xp', v: expVal}); }
             return true;
         }
@@ -865,62 +514,35 @@ class Enemy {
     }
 }
 
-// ==========================================
-// プロジェクト（弾）クラス
-// ==========================================
 class Proj {
-    constructor(x, y, a, d, dmg, lv){
-        this.x = x; this.y = y; this.t = d.t; this.vx = Math.cos(a) * (d.spd || 0); this.vy = Math.sin(a) * (d.spd || 0);
-        this.dmg = dmg; this.p = d.p || 1; this.c = d.col; this.blast = d.blast; this.life = d.life || 120; 
-        this.hit = new Set(); this.sz = d.size || 6; this.isT = d.isT; this.isE = d.isE; this.tm = 0;
-    }
-    
+    constructor(x, y, a, d, dmg, lv){ this.x = x; this.y = y; this.t = d.t; this.vx = Math.cos(a) * (d.spd || 0); this.vy = Math.sin(a) * (d.spd || 0); this.dmg = dmg; this.p = d.p || 1; this.c = d.col; this.blast = d.blast; this.life = d.life || 120; this.hit = new Set(); this.sz = d.size || 6; this.isT = d.isT; this.isE = d.isE; this.tm = 0; }
     update(){
-        if(this.t === 'return') { this.vx *= 0.95; this.vy *= 0.95; if(this.life < 60) { const a = Math.atan2(player.y - this.y, player.x - this.x); this.vx += Math.cos(a) * 0.8; this.vy += Math.sin(a) * 0.8; } }
-        else if(this.t === 'wave') { this.sz += this.vx; this.vx *= 0.98; }
-        else if(this.t === 'pull') { emit(this.x, this.y, this.c, 1, 1); enemies.forEach(e => { if(dist(this.x, this.y, e.x, e.y) < 250) { e.x -= (e.x - this.x) * 0.03; e.y -= (e.y - this.y) * 0.03; } }); }
-        else { this.x += this.vx; this.y += this.vy; }
-        
+        if(this.t === 'return') { this.vx *= 0.95; this.vy *= 0.95; if(this.life < 60) { const a = Math.atan2(player.y - this.y, player.x - this.x); this.vx += Math.cos(a) * 0.8; this.vy += Math.sin(a) * 0.8; } } else if(this.t === 'wave') { this.sz += this.vx; this.vx *= 0.98; } else if(this.t === 'pull') { emit(this.x, this.y, this.c, 1, 1); enemies.forEach(e => { if(dist(this.x, this.y, e.x, e.y) < 250) { e.x -= (e.x - this.x) * 0.03; e.y -= (e.y - this.y) * 0.03; } }); } else { this.x += this.vx; this.y += this.vy; }
         if(this.isT && ++this.tm > 20) { this.tm = 0; let tg = null, md = 400; enemies.forEach(e => { let di = dist(this.x, this.y, e.x, e.y); if(di < md) { md = di; tg = e; } }); if(tg) { projs.push(new Proj(this.x, this.y, Math.atan2(tg.y - this.y, tg.x - this.x), {t:'aim', spd:15, col:'#ffff00', p:1}, this.dmg, 1)); playSFX('shoot'); } }
         this.life--;
-        
         if(this.isE) { if(!heliAnim.active && dist(this.x, this.y, player.x, player.y) < this.sz + player.r) { player.hp -= this.dmg; if(player.hp <= 0) gameOver("GAME OVER", false); this.life = 0; } return; }
         if(this.t === 's_blast' && this.life % 10 !== 0) return;
-        
-        for(let i=enemies.length-1; i>=0; i--){
-            let e = enemies[i]; let d = (this.t === 'wave') ? Math.abs(dist(this.x, this.y, e.x, e.y) - this.sz) : dist(this.x, this.y, e.x, e.y); let hr = (this.t === 'wave') ? 15 : this.sz + (e.r || 12);
-            if(!this.hit.has(e) && d < hr) {
-                if(this.blast) { shake = 8; emit(this.x, this.y, this.c, 30, 10); playSFX('explode'); enemies.forEach(e2 => { if(dist(this.x, this.y, e2.x, e2.y) < this.blast) e2.takeDmg(this.dmg); }); this.life = 0; break; } 
-                else { this.hit.add(e); e.takeDmg(this.dmg); this.p--; if(this.p <= 0) this.life = 0; }
-            }
-        }
+        for(let i=enemies.length-1; i>=0; i--){ let e = enemies[i]; let d = (this.t === 'wave') ? Math.abs(dist(this.x, this.y, e.x, e.y) - this.sz) : dist(this.x, this.y, e.x, e.y); let hr = (this.t === 'wave') ? 15 : this.sz + (e.r || 12); if(!this.hit.has(e) && d < hr) { if(this.blast) { shake = 8; emit(this.x, this.y, this.c, 30, 10); playSFX('explode'); enemies.forEach(e2 => { if(dist(this.x, this.y, e2.x, e2.y) < this.blast) e2.takeDmg(this.dmg); }); this.life = 0; break; } else { this.hit.add(e); e.takeDmg(this.dmg); this.p--; if(this.p <= 0) this.life = 0; } } }
     }
-    
     draw(c){
         c.shadowBlur = 10; c.shadowColor = this.c;
-        if(this.t === 'wave') { c.beginPath(); c.arc(this.x, this.y, this.sz, 0, Math.PI*2); c.strokeStyle = this.c; c.lineWidth = 4; c.stroke(); }
-        else if(this.t === 'pull') { c.beginPath(); c.arc(this.x, this.y, 25 + Math.random()*15, 0, Math.PI*2); c.fillStyle = '#000'; c.fill(); c.strokeStyle = this.c; c.lineWidth = 3; c.stroke(); }
-        else if(this.t === 's_blast') { c.fillStyle = this.c; c.globalAlpha = this.isE ? 0.6 : 1; c.fillRect(this.x - this.sz, this.y - this.sz, this.sz*2, this.sz*2); c.globalAlpha = 1; }
-        else { c.beginPath(); c.arc(this.x, this.y, this.sz, 0, Math.PI*2); c.fillStyle = this.c; c.fill(); }
+        if(this.t === 'wave') { c.beginPath(); c.arc(this.x, this.y, this.sz, 0, Math.PI*2); c.strokeStyle = this.c; c.lineWidth = 4; c.stroke(); } else if(this.t === 'pull') { c.beginPath(); c.arc(this.x, this.y, 25 + Math.random()*15, 0, Math.PI*2); c.fillStyle = '#000'; c.fill(); c.strokeStyle = this.c; c.lineWidth = 3; c.stroke(); } else if(this.t === 's_blast') { c.fillStyle = this.c; c.globalAlpha = this.isE ? 0.6 : 1; c.fillRect(this.x - this.sz, this.y - this.sz, this.sz*2, this.sz*2); c.globalAlpha = 1; } else { c.beginPath(); c.arc(this.x, this.y, this.sz, 0, Math.PI*2); c.fillStyle = this.c; c.fill(); }
         c.shadowBlur = 0;
     }
 }
 
 // ==========================================
-// 画面・メニュー遷移
+// 画面・メニュー遷移 ＆ 共有機能
 // ==========================================
 function startGame(s){
     initAudio(); stg = s; document.getElementById('stage-text').innerText = s;
     document.getElementById('fade-screen').style.opacity = '0'; document.getElementById('fade-screen').style.display = 'none';
     document.getElementById('home-screen').style.display = 'none'; document.getElementById('ui-layer').style.display = 'block';
     
-    // 初期化順序を修正 (確実にボス・キーが出現するように)
     state = 'play'; lt = performance.now(); time = 0; 
     enemies.length = 0; items.length = 0; projs.length = 0; parts.length = 0; playerTrails.length = 0; dmgs.length = 0;
     
-    player = new Player(); 
-    initMap(s);
-    
+    player = new Player(); initMap(s);
     document.getElementById('level-text').innerText = gLv; document.getElementById('xp-bar').style.width = `${(gXp / gMaxXp) * 100}%`;
     requestAnimationFrame(loop);
 }
@@ -929,13 +551,8 @@ function backToHome(){ document.querySelectorAll('.overlay-screen').forEach(e =>
 
 function triggerLvUp(){
     state = 'pause'; const c = document.getElementById('levelup-cards'); c.innerHTML = ''; let opts = []; playSFX('level');
-    eqMains.forEach(w => { let nl = (gWpLv[w] || 1) + 1; opts.push({id: w, l: nl, n: `${wpDB[w].n} Lv${nl}`, d: "威力UP & CD短縮"}); });
-    opts.push({id: 'h', n: "🍖 フル回復", d: "HPを完全に回復"});
-    opts.sort(() => Math.random() - 0.5).slice(0,3).forEach(o => {
-        const d = document.createElement('div'); d.className = 'card'; d.innerHTML = `<div class="card-title">${o.n}</div><div class="card-desc">${o.d}</div>`;
-        d.onclick = () => { if(o.id === 'h') player.hp = player.maxHp; else { gWpLv[o.id] = o.l; save('wplv', gWpLv); player.w[o.id] = o.l; } document.getElementById('level-up-screen').style.display = 'none'; state = 'play'; lt = performance.now(); };
-        c.appendChild(d);
-    });
+    eqMains.forEach(w => { let nl = (gWpLv[w] || 1) + 1; opts.push({id: w, l: nl, n: `${wpDB[w].n} Lv${nl}`, d: "威力UP & CD短縮"}); }); opts.push({id: 'h', n: "🍖 フル回復", d: "HPを完全に回復"});
+    opts.sort(() => Math.random() - 0.5).slice(0,3).forEach(o => { const d = document.createElement('div'); d.className = 'card'; d.innerHTML = `<div class="card-title">${o.n}</div><div class="card-desc">${o.d}</div>`; d.onclick = () => { if(o.id === 'h') player.hp = player.maxHp; else { gWpLv[o.id] = o.l; save('wplv', gWpLv); player.w[o.id] = o.l; } document.getElementById('level-up-screen').style.display = 'none'; state = 'play'; lt = performance.now(); }; c.appendChild(d); });
     document.getElementById('level-up-screen').style.display = 'flex';
 }
 
@@ -947,28 +564,45 @@ function openShop(){
 }
 function closeMenu(){ document.querySelectorAll('.overlay-screen').forEach(e => e.style.display = 'none'); state = 'play'; lt = performance.now(); }
 
+let finalScoreImageBlob = null;
 function gameOver(title, isClear){
     state = 'over'; document.getElementById('ui-layer').style.display = 'none';
     if(isClear){
-        if(stg >= maxStg && maxStg < 8){ maxStg = stg + 1; save('ms', maxStg); }
+        if(stg >= maxStg && maxStg < 16 && stg !== 17 && stg !== 18){ maxStg = stg + 1; save('ms', maxStg); }
+        if(stg === 16) { gWeek++; save('week', gWeek); } // 16ステージクリアで周回カウント
         document.getElementById('go-title').style.color = '#00ffcc'; document.getElementById('go-title').style.textShadow = '0 0 20px #00ffcc';
     } else { document.getElementById('go-title').style.color = '#ff3333'; document.getElementById('go-title').style.textShadow = '0 0 20px #ff0000'; }
-    document.getElementById('go-title').innerText = title; document.getElementById('survival-time').innerText = `Clear Time: ${Math.floor(time/60)}:${Math.floor(time%60).toString().padStart(2,'0')} (Stage ${stg})`;
+    document.getElementById('go-title').innerText = title; 
+    let resText = `Clear Time: ${Math.floor(time/60)}:${Math.floor(time%60).toString().padStart(2,'0')} (Stage ${stg})`;
+    if(stg === 17) resText = title; // バトルドームはタイトルにスコアが入る
+    document.getElementById('survival-time').innerText = resText;
+    
+    // スコア画像を生成して保存
+    canvas.toBlob((blob) => { finalScoreImageBlob = blob; }, 'image/png');
+
     document.getElementById('fade-screen').style.opacity = '0'; setTimeout(() => { document.getElementById('game-over-screen').style.display = 'flex'; }, 500);
 }
 
-// 矢印描画関数 (目的地ガイド)
+// 画像付きシェア機能
+async function shareScore() {
+    const text = document.getElementById('survival-time').innerText;
+    if (navigator.share && finalScoreImageBlob) {
+        const file = new File([finalScoreImageBlob], 'score.png', { type: 'image/png' });
+        try {
+            await navigator.share({
+                title: 'Survive the Swarm V8',
+                text: `Survive the Swarm V8 プレイ結果\n${text}\n#SurviveTheSwarm`,
+                files: [file]
+            });
+        } catch(e) { console.error(e); }
+    } else {
+        alert("お使いの端末・ブラウザは画像シェア機能に対応していません。");
+    }
+}
+
 function drawArrow(tx, ty, col) {
-    const d = dist(player.x, player.y, tx, ty);
-    if(d < 150) return;
-    const a = Math.atan2(ty - player.y, tx - player.x);
-    ctx.save();
-    ctx.translate(player.x + Math.cos(a)*80, player.y + Math.sin(a)*80);
-    ctx.rotate(a);
-    ctx.fillStyle = col;
-    ctx.shadowBlur = 10; ctx.shadowColor = col;
-    ctx.beginPath(); ctx.moveTo(15, 0); ctx.lineTo(-10, -10); ctx.lineTo(-10, 10); ctx.fill();
-    ctx.restore();
+    const d = dist(player.x, player.y, tx, ty); if(d < 150) return; const a = Math.atan2(ty - player.y, tx - player.x);
+    ctx.save(); ctx.translate(player.x + Math.cos(a)*80, player.y + Math.sin(a)*80); ctx.rotate(a); ctx.fillStyle = col; ctx.shadowBlur = 10; ctx.shadowColor = col; ctx.beginPath(); ctx.moveTo(15, 0); ctx.lineTo(-10, -10); ctx.lineTo(-10, 10); ctx.fill(); ctx.restore();
 }
 
 // ==========================================
@@ -983,18 +617,25 @@ function loop(ts){
     player.update(); cam.x = player.x - canvas.width/2; cam.y = player.y - canvas.height/2; 
     checkMission();
 
-    let currentBoss = enemies.find(e => e.t === 'boss' || e.t === 'maou' || e.t === 'g_zombie');
+    let currentBoss = enemies.find(e => e.t === 'boss' || e.t === 'maou' || e.t === 'true_maou' || e.t === 'g_zombie' || e.t === 'g_oni');
     if(currentBoss) { document.getElementById('boss-ui').style.display = 'block'; document.getElementById('boss-name').innerText = eDB[currentBoss.t].n || 'BOSS'; document.getElementById('boss-hp-bar').style.width = (currentBoss.hp / currentBoss.mhp * 100) + '%'; } 
     else { document.getElementById('boss-ui').style.display = 'none'; }
 
     eT += dt; 
-    if(eT > 0.5 - (time/200) - (stg*0.05) && !heliAnim.active){
+    const spawnRate = (0.5-(time/200)-(stg*0.02)) * Math.pow(0.88, gWeek-1);
+    if(eT > spawnRate && !heliAnim.active){
         const a = Math.random() * Math.PI * 2; const r = canvas.width / 1.1; let t = 'zako', rnd = Math.random();
         
-        if(stg === 9) { // バトルドームは全敵が出現
-            if(rnd < 0.02) t = 'maou'; else if(rnd < 0.05) t = 'g_zombie'; else if(rnd < 0.1) t = 'boss'; else if(rnd < 0.3) t = 'ninja'; else if(rnd < 0.5) t = 'slime'; else if(rnd < 0.7) t = 'mid';
+        if(stg === 17) { // バトルドームは全敵が出現
+            if(rnd < 0.01) t = 'true_maou'; else if(rnd < 0.03) t = 'maou'; else if(rnd < 0.05) t = 'g_zombie'; else if(rnd < 0.1) t = 'boss'; else if(rnd < 0.2) t = 'oni'; else if(rnd < 0.3) t = 'undead'; else if(rnd < 0.4) t = 'ninja'; else if(rnd < 0.5) t = 'slime'; else if(rnd < 0.7) t = 'mid';
+        } else if(stg === 18) { // 隠しステージ: 鬼と無限復活のみの超難易度
+            if(rnd < 0.3) t = 'oni'; else if(rnd < 0.6) t = 'undead'; else if(rnd < 0.8) t = 'ninja';
         } else {
-            if(stg >= 2 && rnd < 0.3) t = 'mid'; if(stg >= 4 && rnd < 0.2) t = 'ninja'; if(stg >= 6 && rnd < 0.3) t = 'slime';
+            if(stg >= 2 && rnd < 0.3) t = 'mid'; 
+            if(stg >= 4 && rnd < 0.2) t = 'ninja'; 
+            if(stg >= 6 && rnd < 0.3) t = 'slime';
+            if(stg >= 9 && rnd < 0.2) t = 'oni'; // ステージ9以降は鬼出現
+            if(stg >= 11 && rnd < 0.2) t = 'undead'; // ステージ11以降は無限復活出現
         }
         enemies.push(new Enemy(t, player.x + Math.cos(a)*r, player.y + Math.sin(a)*r, 1 + (stg * 0.2), 1 + (time / 300))); eT = 0;
     }
@@ -1059,7 +700,7 @@ function loop(ts){
     mCtx.clearRect(0, 0, 160, 160); const mS = 0.04; mCtx.save(); mCtx.translate(80, 80);
     walls.forEach(w => { mCtx.fillStyle = '#555'; mCtx.fillRect((w.x - player.x)*mS, (w.y - player.y)*mS, w.w*mS, w.h*mS); });
     if(heli.act){ mCtx.fillStyle = '#0f0'; mCtx.beginPath(); mCtx.arc((heli.x - player.x)*mS, (heli.y - player.y)*mS, 6, 0, Math.PI*2); mCtx.fill(); }
-    enemies.forEach(e => { mCtx.fillStyle = (e.t === 'boss' || e.t === 'maou' || e.t === 'g_zombie') ? '#ff0000' : '#ff8888'; mCtx.fillRect((e.x - player.x)*mS, (e.y - player.y)*mS, 4, 4); });
+    enemies.forEach(e => { mCtx.fillStyle = (e.t === 'boss' || e.t === 'maou' || e.t === 'true_maou' || e.t === 'g_zombie' || e.t === 'g_oni') ? '#ff0000' : '#ff8888'; mCtx.fillRect((e.x - player.x)*mS, (e.y - player.y)*mS, 4, 4); });
     mCtx.fillStyle = '#fff'; mCtx.beginPath(); mCtx.arc(0, 0, 3, 0, Math.PI*2); mCtx.fill(); mCtx.restore();
 }
 </script>
