@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Survive the Swarm - V8 Ultimate Final Edition</title>
+    <title>Survive the Swarm - V9.1 Ultimate Future Edition</title>
     <style>
         /* =========================================
            基本スタイル・UIレイヤー
@@ -37,29 +37,28 @@
         .menu-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,150,255,0.6); }
 
         .overlay-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(20,20,20,0.95) 0%, rgba(0,0,0,0.98) 100%); display: none; flex-direction: column; justify-content: center; align-items: center; pointer-events: auto; z-index: 20; backdrop-filter: blur(10px); }
-        h1 { color: #ffcc00; text-shadow: 0 0 20px #ff9900; margin-bottom: 10px; font-size: 55px; text-align: center; letter-spacing: 3px; }
-        .subtitle { font-size: 20px; color: #ddd; margin-bottom: 25px; text-shadow: 1px 1px 2px #000; }
+        h1 { color: #ffcc00; text-shadow: 0 0 20px #ff9900; margin-bottom: 10px; font-size: 45px; text-align: center; letter-spacing: 3px; }
+        .subtitle { font-size: 18px; color: #ddd; margin-bottom: 25px; text-shadow: 1px 1px 2px #000; }
         
-        .card-container { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; max-width: 1000px; max-height: 55vh; overflow-y: auto; padding: 20px; }
-        .card { background: linear-gradient(145deg, #2a2a2a, #1a1a1a); border: 2px solid #444; border-radius: 15px; width: 160px; padding: 20px; text-align: center; cursor: pointer; transition: 0.2s ease-out; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 15px rgba(0,0,0,0.5); }
-        .card:hover { transform: translateY(-10px) scale(1.05); border-color: #ffcc00; box-shadow: 0 15px 25px rgba(255, 204, 0, 0.4); }
-        .card.selected { border-color: #00ffcc; background: linear-gradient(145deg, #114433, #002211); box-shadow: 0 0 20px rgba(0, 255, 204, 0.6); }
-        .card-title { font-size: 18px; font-weight: 900; margin-bottom: 8px; color: #fff; } 
-        .card-desc { font-size: 13px; color: #aaa; line-height: 1.4; }
+        .card-container { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; max-width: 1000px; max-height: 50vh; overflow-y: auto; padding: 10px; }
+        .card { background: linear-gradient(145deg, #2a2a2a, #1a1a1a); border: 2px solid #444; border-radius: 12px; width: 150px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s ease-out; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 15px rgba(0,0,0,0.5); }
+        .card:hover { transform: translateY(-5px) scale(1.05); border-color: #ffcc00; box-shadow: 0 10px 20px rgba(255, 204, 0, 0.4); }
+        .card.selected { border-color: #00ffcc; background: linear-gradient(145deg, #114433, #002211); box-shadow: 0 0 15px rgba(0, 255, 204, 0.6); }
+        .card-title { font-size: 16px; font-weight: 900; margin-bottom: 8px; color: #fff; } 
+        .card-desc { font-size: 12px; color: #aaa; line-height: 1.4; }
         
-        .btn-large { padding: 15px 40px; font-size: 20px; cursor: pointer; font-weight: 900; background: linear-gradient(180deg, #ffcc00, #ff9900); color: #000; border: none; border-radius: 12px; margin: 15px; transition: 0.2s; box-shadow: 0 6px 15px rgba(255,153,0,0.4); text-transform: uppercase; letter-spacing: 1px; }
-        .btn-large:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 20px rgba(255,153,0,0.6); }
+        .btn-large { padding: 12px 30px; font-size: 18px; cursor: pointer; font-weight: 900; background: linear-gradient(180deg, #ffcc00, #ff9900); color: #000; border: none; border-radius: 10px; margin: 10px; transition: 0.2s; box-shadow: 0 6px 15px rgba(255,153,0,0.4); letter-spacing: 1px; }
+        .btn-large:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 20px rgba(255,153,0,0.6); }
         .btn-share { background: linear-gradient(180deg, #00d2ff, #3a7bd5); color: #fff; }
-        .btn-share:hover { box-shadow: 0 10px 20px rgba(0,210,255,0.6); }
+        .btn-share:hover { box-shadow: 0 8px 20px rgba(0,210,255,0.6); }
         
-        .stage-btn { padding: 10px 15px; font-size: 14px; font-weight: bold; background: #333; color: #fff; border: 2px solid #555; border-radius: 8px; cursor: pointer; transition: 0.2s; margin: 5px; width: 200px; }
-        .stage-btn:hover:not(:disabled) { border-color: #00ffcc; background: #444; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,255,204,0.3); }
+        .stage-btn { padding: 8px 12px; font-size: 13px; font-weight: bold; background: #333; color: #fff; border: 2px solid #555; border-radius: 8px; cursor: pointer; transition: 0.2s; margin: 4px; width: 180px; }
+        .stage-btn:hover:not(:disabled) { border-color: #00ffcc; background: #444; transform: translateY(-2px); box-shadow: 0 5px 10px rgba(0,255,204,0.3); }
         .stage-btn:disabled { background: #111; color: #444; cursor: not-allowed; border-color: #222; }
         
-        #minimap { position: absolute; top: 20px; right: 20px; width: 160px; height: 160px; background: rgba(0,0,0,0.7); border: 3px solid #444; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+        #minimap { position: absolute; top: 20px; right: 20px; width: 150px; height: 150px; background: rgba(0,0,0,0.7); border: 3px solid #444; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
         #fade-screen { position: absolute; top:0; left:0; width:100%; height:100%; background: #fff; opacity: 0; pointer-events: none; z-index: 999; display: none; transition: opacity 2s ease-in; }
 
-        /* Mobile UI */
         #mobile-controls { position: absolute; bottom: 30px; left: 0; width: 100%; height: 200px; pointer-events: none; z-index: 6; display: none; }
         #joystick-base { position: absolute; bottom: 20px; left: 30px; width: 120px; height: 120px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; pointer-events: auto; }
         #joystick-stick { position: absolute; top: 35px; left: 35px; width: 50px; height: 50px; background: rgba(255,255,255,0.5); border-radius: 50%; }
@@ -67,7 +66,7 @@
         #m-btn-sub { bottom: 100px; right: 30px; border-color: #00ffcc; color: #00ffcc; }
         #m-btn-ult { bottom: 20px; right: 110px; border-color: #ffcc00; color: #ffcc00; }
         #m-btn-shop { bottom: 20px; right: 30px; border-color: #44aaff; color: #44aaff; }
-        #ui-toggle-btn { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.1); border: 1px solid #aaa; color: #fff; padding: 5px 10px; font-size: 14px; cursor: pointer; border-radius: 4px; pointer-events: auto; z-index: 50; }
+        #ui-toggle-btn { position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.1); border: 1px solid #aaa; color: #fff; padding: 5px 10px; font-size: 12px; cursor: pointer; border-radius: 4px; pointer-events: auto; z-index: 50; }
     </style>
 </head>
 <body>
@@ -77,32 +76,28 @@
 
 <div id="home-screen" class="overlay-screen" style="display:flex;">
     <button id="ui-toggle-btn" onclick="manualToggleUI()">📱 スマホ操作切替: 自動</button>
-    <h1 style="font-size: 50px;">SURVIVE THE SWARM<br><span style="font-size:24px; color:#00ffcc;" id="week-text">V8 ULTIMATE FINAL EDITION</span></h1>
+    <h1 style="font-size: 45px;">SURVIVE THE SWARM<br><span style="font-size:20px; color:#00ffcc;" id="week-text">V9.1 ULTIMATE FUTURE EDITION</span></h1>
     <div class="subtitle">🪙 <span id="home-coin" class="currency">0</span> | ✨TP <span id="home-tp" class="tp-text">0</span> | 👑 Global Lv <span id="home-lv" style="color:#ff55ff;">1</span></div>
     
-    <div style="max-width:1100px; text-align:center; display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; max-height: 40vh; overflow-y: auto;" id="stage-list">
-        </div>
+    <div style="max-width:1100px; text-align:center; display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 10px; max-height: 45vh; overflow-y: auto; padding: 10px;" id="stage-list"></div>
     
-    <div style="display:flex; margin-top:15px; gap: 15px;">
-        <button class="btn-large" onclick="openLoadout()" style="padding: 10px 20px; font-size: 16px;">🗡️ 装備編成</button>
-        <button class="btn-large" style="background: linear-gradient(180deg, #bb66ff, #8800ff); color: #fff; padding: 10px 20px; font-size: 16px;" onclick="openTalent()">🧬 ツリー</button>
-        <button class="btn-large" style="background: linear-gradient(180deg, #ff5555, #aa0000); color: #fff; padding: 10px 20px; font-size: 16px;" onclick="hardReset()">⚠️ 初期化</button>
+    <div style="display:flex; margin-top:10px; gap: 10px; flex-wrap: wrap; justify-content: center;">
+        <button class="btn-large" onclick="openLoadout()" style="padding: 10px 15px; font-size: 14px;">🗡️ 装備編成</button>
+        <button class="btn-large" style="background: linear-gradient(180deg, #bb66ff, #8800ff); color: #fff; padding: 10px 15px; font-size: 14px;" onclick="openTalent()">🧬 ツリー</button>
+        <button class="btn-large" style="background: linear-gradient(180deg, #00d2ff, #3a7bd5); color: #fff; padding: 10px 15px; font-size: 14px;" onclick="openBox()">🎁 報酬箱を一括開封 (<span id="box-count">0</span>)</button>
+        <button class="btn-large" style="background: linear-gradient(180deg, #ff5555, #aa0000); color: #fff; padding: 10px 15px; font-size: 14px;" onclick="hardReset()">⚠️ 初期化</button>
     </div>
 </div>
 
 <div id="loadout-screen" class="overlay-screen">
-    <h1>EQUIPMENT</h1>
-    <div class="subtitle">メイン武器を3つ、サブ武器を1つ選択 (武器レベルは全プレイ共通で引き継がれます)</div>
-    <h2 style="margin:0; color:#00ffcc;">メイン武器 (3種)</h2>
-    <div class="card-container" id="equip-main-cards" style="max-height: 40vh;"></div>
-    <h2 style="margin:10px 0 0 0; color:#ff9900;">サブスキル (1種)</h2>
-    <div class="card-container" id="equip-sub-cards" style="max-height: 20vh;"></div>
+    <h1>EQUIPMENT</h1><div class="subtitle">メイン武器を3つ、サブ武器を1つ選択 (武器レベルは全プレイ共通で引き継がれます)</div>
+    <h2 style="margin:0; color:#00ffcc;">メイン武器 (3種)</h2><div class="card-container" id="equip-main-cards" style="max-height: 40vh;"></div>
+    <h2 style="margin:10px 0 0 0; color:#ff9900;">サブスキル (1種)</h2><div class="card-container" id="equip-sub-cards" style="max-height: 20vh;"></div>
     <button class="btn-large" onclick="backToHome()">完了</button>
 </div>
 
 <div id="talent-screen" class="overlay-screen">
-    <h1>SKILL TREE</h1>
-    <p style="font-size:20px;">✨所持TP: <span id="talent-tp" class="tp-text">0</span></p>
+    <h1>SKILL TREE</h1><p style="font-size:20px;">✨所持TP: <span id="talent-tp" class="tp-text">0</span></p>
     <div id="tree-container" style="display:flex; gap:20px; overflow-y:auto; max-height:55vh; padding:20px; background:rgba(0,0,0,0.5); border: 2px solid #444; border-radius: 15px;"></div>
     <p id="talent-desc" style="color:#ffcc00; height:24px; font-weight:bold; font-size:18px; margin-top:15px;"></p>
     <button class="btn-large" onclick="backToHome()">戻る</button>
@@ -128,36 +123,40 @@
 </div>
 
 <div id="level-up-screen" class="overlay-screen">
-    <h1>LEVEL UP!</h1><div class="subtitle">装備を強化するか、回復するか選択してください (TP+1獲得)</div>
+    <h1>LEVEL UP!</h1><div class="subtitle">装備を強化するか、回復するか選択してください (TP+1 / 🎁箱+1)</div>
     <div class="card-container" id="levelup-cards"></div>
 </div>
 
 <div id="shop-screen" class="overlay-screen">
     <h1>SHOP</h1><p style="font-size:24px;">🪙 <span id="shop-coin" class="currency">0</span></p>
-    <div class="card-container" id="shop-cards"></div>
-    <button class="btn-large" onclick="closeMenu()">ゲームに戻る</button>
+    <div class="card-container" id="shop-cards"></div><button class="btn-large" onclick="closeMenu()">ゲームに戻る</button>
 </div>
 
 <div id="game-over-screen" class="overlay-screen">
-    <h1 id="go-title" style="font-size: 70px;"></h1>
-    <p id="survival-time" style="font-size:26px; font-weight:bold; white-space:pre-wrap; text-align:center; margin-bottom: 30px;"></p>
-    <div style="display:flex; gap:20px;">
-        <button class="btn-large btn-share" onclick="shareScore()">📤 画像付きでシェアする</button>
+    <h1 id="go-title" style="font-size: 60px;"></h1>
+    <p id="survival-time" style="font-size:24px; font-weight:bold; white-space:pre-wrap; text-align:center; margin-bottom: 20px; line-height:1.5;"></p>
+    <div style="display:flex; gap:15px; flex-wrap:wrap; justify-content:center;">
+        <button class="btn-large btn-share" onclick="shareScore()">📤 画像でシェアする</button>
         <button class="btn-large" onclick="location.reload()">HOMEに戻る</button>
     </div>
 </div>
 
 <script>
 // ==========================================
-// 音声・シンセサイザー システム
+// 音声・シンセサイザー システム（フリーズ対策済）
 // ==========================================
-const AudioContext = window.AudioContext || window.webkitAudioContext; 
-let actx;
+const AudioContext = window.AudioContext || window.webkitAudioContext; let actx;
+let lastSnd = {}; // 連打フリーズ防止用リミッター
+
 function initAudio(){ if(!actx) actx = new AudioContext(); if(actx.state==='suspended') actx.resume(); }
 
 function playSFX(type) {
     if(!actx) return; 
-    const t = actx.currentTime, osc = actx.createOscillator(), gn = actx.createGain(); 
+    const now = actx.currentTime;
+    if(lastSnd[type] && now - lastSnd[type] < 0.05) return; // 0.05秒間隔制限（フリーズ防止）
+    lastSnd[type] = now;
+    
+    const t = now, osc = actx.createOscillator(), gn = actx.createGain(); 
     osc.connect(gn); gn.connect(actx.destination);
     
     if(type === 'shoot') { osc.type = 'square'; osc.frequency.setValueAtTime(800, t); osc.frequency.exponentialRampToValueAtTime(100, t + 0.1); gn.gain.setValueAtTime(0.05, t); gn.gain.linearRampToValueAtTime(0, t + 0.1); osc.start(t); osc.stop(t + 0.1); }
@@ -172,18 +171,13 @@ function playSFX(type) {
 // ==========================================
 let isMobileMode = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 let manualUIMode = 'auto'; 
-
 function updateUIAppearance() {
     const activeMobile = manualUIMode === 'mobile' || (manualUIMode === 'auto' && isMobileMode);
     document.getElementById('mobile-controls').style.display = activeMobile ? 'block' : 'none';
-    const pcHint = document.getElementById('pc-hint');
-    if (pcHint) pcHint.style.display = activeMobile ? 'none' : 'block';
+    if(document.getElementById('pc-hint')) document.getElementById('pc-hint').style.display = activeMobile ? 'none' : 'block';
     document.getElementById('ui-toggle-btn').innerText = `📱 操作UI: ${manualUIMode.toUpperCase()}`;
 }
-function manualToggleUI() {
-    manualUIMode = manualUIMode === 'auto' ? 'mobile' : (manualUIMode === 'mobile' ? 'pc' : 'auto');
-    updateUIAppearance();
-}
+function manualToggleUI() { manualUIMode = manualUIMode === 'auto' ? 'mobile' : (manualUIMode === 'mobile' ? 'pc' : 'auto'); updateUIAppearance(); }
 
 let joy = { active: false, dx: 0, dy: 0 };
 const jb = document.getElementById('joystick-base'), js = document.getElementById('joystick-stick');
@@ -200,62 +194,94 @@ if(jb && js) {
 }
 
 // ==========================================
-// セーブデータ管理
+// セーブデータ・プレゼント管理
 // ==========================================
-function load(key, defaultVal){ let v = localStorage.getItem('v8_' + key); return v ? JSON.parse(v) : defaultVal; }
-function save(key, val){ localStorage.setItem('v8_' + key, JSON.stringify(val)); }
+function load(key, defaultVal){ let v = localStorage.getItem('v9_' + key); return v ? JSON.parse(v) : defaultVal; }
+function save(key, val){ localStorage.setItem('v9_' + key, JSON.stringify(val)); }
 function hardReset(){ if(confirm("全てのデータを消去し、初期状態に戻しますか？")){ localStorage.clear(); location.reload(); } }
 
 let gCoins = load('coins', 0), gTP = load('tp', 0), gLv = load('lv', 1), gXp = load('xp', 0), gMaxXp = load('maxxp', 5), maxStg = load('ms', 1), gWeek = load('week', 1);
 let gWpLv = load('wplv', {}), eqMains = load('eq_m', ['kunai', 'orb', 'mash']), eqSub = load('eq_s', 'dash'), uTalents = load('tal', {});
+let gBestScore = load('bestScore', 0); // バトルドーム用ハイスコア
 let totalDamage = 0;
 
+let gBoxes = load('boxes', 0), gBoxClaimedLv = load('boxcl', 1);
+if(gLv > gBoxClaimedLv) { gBoxes += (gLv - gBoxClaimedLv); gBoxClaimedLv = gLv; save('boxes', gBoxes); save('boxcl', gBoxClaimedLv); }
+
+function openBox() {
+    initAudio();
+    if(gBoxes <= 0) return alert("報酬箱がありません！レベルアップで獲得できます。");
+    let count = gBoxes; gBoxes = 0; save('boxes', gBoxes);
+    let tp = 0, coin = 0;
+    for(let i=0; i<count; i++){
+        let r = Math.random();
+        if(r < 0.1) tp += 2; else if(r < 0.4) tp += 1; else coin += 100 + Math.floor(Math.random()*400);
+    }
+    if(tp > 0) { gTP += tp; save('tp', gTP); }
+    if(coin > 0) { gCoins += coin; save('coins', gCoins); }
+    alert(`🎁 ${count}個の箱を一括開封しました！\n\n獲得TP: ${tp}\n獲得コイン: ${coin}`);
+    playSFX('level'); updateHomeUI();
+}
+
 // ==========================================
-// ステージ・UI初期化
+// ステージ・UI初期化 (全27ステージ)
 // ==========================================
 const stgNames = [
     "1: 始まりの草原 (討伐)", "2: 廃棄工場 (生存)", "3: 忘却の迷宮 (収集)", "4: 汚染区域 (巨屍)",
     "5: アンデッド墓地 (殲滅)", "6: 毒スライムの沼 (生存)", "7: 機巧都市コア (収集)", "8: 魔王の玉座 (決戦)",
     "9: 焦土 (討伐)", "10: 氷結の洞窟 (生存)", "11: 幻影の迷宮 (収集)", "12: 鬼ヶ島 (鬼屍)",
     "13: 奈落 (殲滅)", "14: 虚無の空間 (生存)", "15: 神界の遺跡 (収集)", "16: 真・魔王の玉座 (超決戦)",
-    "17: バトルドーム (スコア)"
+    "17: バトルドーム (スコア)", "18: 隠しステージ (消費TP:5)",
+    "19: 未来・崩壊都市 (討伐)", "20: 未来・シェルター (生存)", "21: 未来・時空迷宮 (収集)", "22: 未来・転送ゲート (巨屍)",
+    "23: 未来・機巧残骸 (殲滅)", "24: 未来・防衛線 (生存)", "25: 未来・中枢 (収集)", "26: 未来・真の黒幕 (超決戦)",
+    "27: ゲリラ経験値 (稼ぎ)"
 ];
 
 function updateHomeUI(){
     document.getElementById('home-coin').innerText = gCoins; document.getElementById('home-tp').innerText = gTP; document.getElementById('home-lv').innerText = gLv;
-    document.getElementById('week-text').innerText = `V8 ULTIMATE FINAL - ${gWeek}周目`;
+    document.getElementById('box-count').innerText = gBoxes; document.getElementById('week-text').innerText = `V9.1 ULTIMATE FUTURE - ${gWeek}周目`;
     
     let sl = document.getElementById('stage-list'); sl.innerHTML = '';
     
-    for(let i=1; i<=17; i++){
-        let b = document.createElement('button'); b.className = 'stage-btn'; b.innerText = stgNames[i-1];
-        if(i === 17) { b.style.borderColor = "#ffcc00"; b.style.color = "#ffcc00"; b.onclick = () => startGame(17); } 
-        else if(i > maxStg) { b.disabled = true; b.innerText += " (Locked)"; } 
-        else {
-            if(i === 4 || i === 12) b.style.borderColor = "#ff5555";
-            if(i === 8 || i === 16) { b.style.borderColor = "#aa00ff"; b.style.color = "#ffddff"; }
-            b.onclick = () => startGame(i);
-        }
-        sl.appendChild(b);
-    }
-    
-    // 隠しステージ解放判定: 全48ノード解放 ＆ TP 5以上
-    let unlockedNodeCount = Object.keys(uTalents).length;
-    if(unlockedNodeCount >= 48) {
-        let b = document.createElement('button'); b.className = 'stage-btn'; b.innerText = "18: 隠しステージ (消費TP:5)";
-        b.style.borderColor = "#00ffcc"; b.style.color = "#00ffcc"; b.style.background = "#002233";
-        if(gTP >= 5) {
-            b.onclick = () => { gTP -= 5; save('tp', gTP); updateHomeUI(); startGame(18); };
+    for(let i=1; i<=27; i++){
+        if(i === 18) {
+            let unlockedNodeCount = Object.keys(uTalents).length;
+            if(unlockedNodeCount >= 48) {
+                let b = document.createElement('button'); b.className = 'stage-btn'; b.innerText = stgNames[i-1];
+                b.style.borderColor = "#00ffcc"; b.style.color = "#00ffcc"; b.style.background = "#002233";
+                if(gTP >= 5) { b.onclick = () => { gTP -= 5; save('tp', gTP); updateHomeUI(); startGame(i); }; }
+                else { b.disabled = true; b.innerText += " (TP不足)"; }
+                sl.appendChild(b);
+            }
+        } else if(i >= 19 && i <= 26) {
+            let b = document.createElement('button'); b.className = 'stage-btn'; b.innerText = stgNames[i-1];
+            if(maxStg >= 9) { b.style.borderColor = "#00aaff"; b.style.color = "#aaffff"; b.onclick = () => startGame(i); }
+            else { b.disabled = true; b.innerText += " (Stg8クリアで解放)"; }
+            sl.appendChild(b);
+        } else if(i === 17) {
+            let b = document.createElement('button'); b.className = 'stage-btn'; b.innerText = `17: バトルドーム (BEST: ${gBestScore})`;
+            b.style.borderColor = "#ffcc00"; b.style.color = "#ffcc00"; b.onclick = () => startGame(i);
+            sl.appendChild(b);
+        } else if(i === 27) {
+            let b = document.createElement('button'); b.className = 'stage-btn'; b.innerText = stgNames[i-1];
+            b.style.borderColor = "#ffcc00"; b.style.color = "#ffcc00"; b.onclick = () => startGame(i);
+            sl.appendChild(b);
         } else {
-            b.disabled = true; b.innerText += " (TP不足)";
+            let b = document.createElement('button'); b.className = 'stage-btn'; b.innerText = stgNames[i-1];
+            if(i > maxStg) { b.disabled = true; b.innerText += " (Locked)"; }
+            else {
+                if(i === 4 || i === 12) b.style.borderColor = "#ff5555";
+                if(i === 8 || i === 16) { b.style.borderColor = "#aa00ff"; b.style.color = "#ffddff"; }
+                b.onclick = () => startGame(i);
+            }
+            sl.appendChild(b);
         }
-        sl.appendChild(b);
     }
 }
 document.addEventListener('DOMContentLoaded', () => { updateUIAppearance(); updateHomeUI(); });
 
 // ==========================================
-// スキルツリーシステム (全48ノード)
+// スキルツリーシステム
 // ==========================================
 const talentBranches = [ { id:'a', n:'⚔️ 攻撃強化', t:['攻撃力+15%', '弾速+10%', '威力+20%'] }, { id:'d', n:'🛡️ 耐久強化', t:['最大HP+50', '移動速度+5%', '自動回復'] }, { id:'u', n:'✨ 補助機能', t:['獲得EXP+10%', 'アイテム吸引+20%', 'ドロップ率UP'] }, { id:'s', n:'⚙️ サブスキル', t:['効果量UP', 'クールダウン-10%', '必殺チャージ増'] } ];
 function getTalentLevel(id){ let level = 0; for(let i=1; i<=12; i++) { if(uTalents[`${id}_${i}`]) level++; } return level; }
@@ -287,6 +313,7 @@ function openTalent(){
 // ==========================================
 const wpDB = {
     kunai: { n: "クナイ", t: "auto", cd: 40, dmg: 15, spd: 12, c: 1, col: "#ffffff", desc: "最も近い敵を自動で狙撃する" },
+    ice_kunai: { n: "氷クナイ", t: "auto", cd: 45, dmg: 10, spd: 12, c: 1, col: "#00ffff", freeze: true, desc: "敵を自動追尾し、移動速度を低下させる" },
     orb: { n: "オーブ", t: "orbit", cd: 0, dmg: 20, rad: 70, rot: 0.08, c: 2, col: "#ffff00", desc: "プレイヤーの周囲を回転して守る" },
     mash: { n: "スマッシュ", t: "mash", cd: 0, dmg: 40, rad: 60, col: "#ff8800", desc: "【タップ連打】周囲に強力な衝撃波" },
     rocket: { n: "ロケラン", t: "blast", cd: 90, dmg: 80, spd: 8, blast: 100, col: "#ff0000", desc: "マウス方向へ発射、着弾で大爆発" },
@@ -302,20 +329,28 @@ const wpDB = {
     pulse: { n: "パルス波", t: "wave", cd: 100, dmg: 40, spd: 4, p: 99, col: "#00ffff", desc: "自身を中心に広がるリング状の波" },
     shuriken: { n: "大裏剣", t: "aim", cd: 80, dmg: 60, spd: 6, p: 99, size: 20, col: "#888888", desc: "巨大でゆっくり進む無限貫通刃" }
 };
-const subDB = { dash: { n: "ダッシュ", cd: 120, desc: "[SUB] 向いている方向へ高速移動" }, heal: { n: "オートヒール", cd: 300, desc: "一定時間ごとにHPが自動回復" }, turret: { n: "タレット設置", cd: 180, desc: "[SUB] その場に自動砲台を設置" } };
+const subDB = { 
+    dash: { n: "ダッシュ", cd: 120, desc: "[SUB] 向いている方向へ高速移動" }, 
+    heal: { n: "オートヒール", cd: 300, desc: "一定時間ごとにHPが自動回復" }, 
+    turret: { n: "タレット設置", cd: 180, desc: "[SUB] その場に自動砲台を設置" },
+    doll: { n: "身代わり人形", cd: 240, desc: "[SUB] 敵を惹きつけるデコイを設置" } // 追加: 身代わり人形
+};
 
 const eDB = {
     zako: { h: 15, s: 2.0, c: '#88ff88', r: 12 },
     mid: { h: 50, s: 2.8, c: '#22aa22', r: 16 },
     slime: { h: 40, s: 1.0, c: '#00aa00', r: 18 },
     ninja: { h: 30, s: 4.0, c: '#444444', r: 10 },
-    oni: { h: 100, s: 3.5, c: '#ff5555', r: 18 }, // 追加: 鬼ゾンビ
-    undead: { h: 40, s: 2.0, c: '#555555', r: 14 }, // 追加: 無限復活ゾンビ
+    oni: { h: 100, s: 3.5, c: '#ff5555', r: 18 }, 
+    undead: { h: 40, s: 2.0, c: '#555555', r: 14 }, 
+    warp_z: { h: 60, s: 2.0, c: '#aa00ff', r: 14 }, 
+    bomb_z: { h: 40, s: 3.0, c: '#ff5500', r: 16 }, 
     g_zombie: { h: 8000, s: 0.6, c: '#335533', r: 80, x: 500, n: 'GIANT ZOMBIE' },
-    g_oni: { h: 15000, s: 1.0, c: '#880000', r: 80, x: 800, n: 'GIANT ONI' }, // ステージ12用
+    g_oni: { h: 15000, s: 1.0, c: '#880000', r: 80, x: 800, n: 'GIANT ONI' },
     boss: { h: 1500, s: 1.0, c: '#ff0000', r: 40, x: 100, n: 'MUTANT BOSS' },
     maou: { h: 6000, s: 1.5, c: '#550000', r: 50, x: 300, n: 'OVERLORD' },
-    true_maou: { h: 50000, s: 2.0, c: '#220000', r: 60, x: 1000, n: 'TRUE OVERLORD' } // 超強化最終ボス
+    true_maou: { h: 50000, s: 2.0, c: '#220000', r: 60, x: 1000, n: 'TRUE OVERLORD' },
+    future_maou: { h: 80000, s: 2.5, c: '#00ffff', r: 60, x: 2000, n: 'FUTURE OVERLORD' } 
 };
 
 // ==========================================
@@ -358,7 +393,7 @@ function resolveCollision(obj) {
 }
 
 // ==========================================
-// マップ生成とミッション管理 (全18ステージ対応)
+// マップ生成とミッション管理
 // ==========================================
 let mis = { t: '', tg: 0, cur: 0, done: false }, heli = { act: false, x: 0, y: 0, escT: 0, scale: 1.0 }, heliAnim = { active: false, timer: 0 };
 
@@ -366,28 +401,29 @@ function initMap(s){
     walls = []; convs = []; mis = { t: '', tg: 0, cur: 0, done: false }; heli = { act: false, x: 0, y: 0, escT: 0, scale: 1.0 }; heliAnim = { active: false, timer: 0 }; totalDamage = 0;
     document.getElementById('escape-timer').style.display = 'none'; document.getElementById('boss-ui').style.display = 'none';
     
-    // ステージごとの設定
-    if(s === 1) { mis = { t: 'kill', tg: 50, cur: 0 }; }
-    if(s === 2) { mis = { t: 'survive', tg: 60, cur: 0 }; convs.push({x: -200, y: -50, w: 400, h: 100, dx: 3, dy: 0}); convs.push({x: -50, y: 200, w: 100, h: 400, dx: 0, dy: -3}); }
-    if(s === 3 || s === 11 || s === 15) { // 迷路・収集系
-        mis = { t: 'item', tg: s===15?7:3, cur: 0 }; 
+    if(s===1 || s===5 || s===9 || s===13 || s===19 || s===23) { mis = { t: 'kill', tg: s>=13?200:100, cur: 0 }; }
+    if(s===2 || s===6 || s===10 || s===14 || s===20 || s===24) { mis = { t: 'survive', tg: s>=14?120:90, cur: 0 }; if(s===2||s===20){ convs.push({x: -200, y: -50, w: 400, h: 100, dx: 3, dy: 0}); convs.push({x: -50, y: 200, w: 100, h: 400, dx: 0, dy: -3}); } }
+    if(s===3 || s===7 || s===11 || s===15 || s===21 || s===25) { 
+        mis = { t: 'item', tg: (s===15||s===25)?7:3, cur: 0 }; 
         for(let x=-1200; x<=1200; x+=250) for(let y=-1200; y<=1200; y+=250) if(Math.random() < 0.4 && (Math.abs(x) > 200 || Math.abs(y) > 200)) walls.push({x: x, y: y, w: 150 + Math.random()*100, h: 150 + Math.random()*100});
-        for(let i=0; i<(s===15?7:3); i++) items.push({ x: (Math.random()>0.5?1:-1) * (500 + Math.random()*1000), y: (Math.random()>0.5?1:-1) * (500 + Math.random()*1000), t: 'key' });
+        for(let i=0; i<(s===15||s===25?7:3); i++) items.push({ x: (Math.random()>0.5?1:-1) * (500 + Math.random()*1000), y: (Math.random()>0.5?1:-1) * (500 + Math.random()*1000), t: 'key' });
+        if(s===7||s===25) { convs.push({x: -600, y: -600, w: 1200, h: 80, dx: 5, dy: 0}); convs.push({x: -600, y: 600, w: 1200, h: 80, dx: -5, dy: 0}); }
     }
-    if(s === 4) { mis = { t: 'boss', tg: 1, cur: 0 }; enemies.push(new Enemy('g_zombie', 800, 0, 1, 1)); }
-    if(s === 5 || s === 9 || s === 13) { mis = { t: 'kill', tg: s===13?200:100, cur: 0 }; }
-    if(s === 6 || s === 10 || s === 14) { mis = { t: 'survive', tg: s===14?120:90, cur: 0 }; }
-    if(s === 7) { mis = { t: 'item', tg: 5, cur: 0 }; for(let i=0; i<5; i++) items.push({ x: (Math.random()-0.5)*2500, y: (Math.random()-0.5)*2500, t: 'key' }); convs.push({x: -600, y: -600, w: 1200, h: 80, dx: 5, dy: 0}); convs.push({x: -600, y: 600, w: 1200, h: 80, dx: -5, dy: 0}); }
-    if(s === 8) { mis = { t: 'boss', tg: 1, cur: 0 }; enemies.push(new Enemy('maou', 0, -800, 1, 1)); }
-    if(s === 12) { mis = { t: 'boss', tg: 1, cur: 0 }; enemies.push(new Enemy('g_oni', 800, 0, 1, 1)); } // 巨大鬼
-    if(s === 16) { mis = { t: 'boss', tg: 1, cur: 0 }; enemies.push(new Enemy('true_maou', 0, -1000, 1, 1)); } // 真魔王
-    if(s === 17) { mis = { t: 'score', tg: 180, cur: 0 }; } // バトルドーム
-    if(s === 18) { mis = { t: 'kill', tg: 500, cur: 0 }; } // 隠しステージ: 狂気の500体討伐
+    if(s===4 || s===8 || s===12 || s===16 || s===22 || s===26) { 
+        mis = { t: 'boss', tg: 1, cur: 0 }; 
+        if(s===4||s===22) enemies.push(new Enemy('g_zombie', 800, 0, 1, 1));
+        if(s===8) enemies.push(new Enemy('maou', 0, -800, 1, 1));
+        if(s===12) enemies.push(new Enemy('g_oni', 800, 0, 1, 1));
+        if(s===16) enemies.push(new Enemy('true_maou', 0, -1000, 1, 1));
+        if(s===26) enemies.push(new Enemy('future_maou', 0, -1000, 1, 1));
+    }
+    if(s===17 || s===27) { mis = { t: 'score', tg: 180, cur: 0 }; } 
+    if(s===18) { mis = { t: 'kill', tg: 500, cur: 0 }; } 
 }
 
 function checkMission(){
-    if(stg === 17) {
-        mis.cur = time; document.getElementById('mission-text').innerText = `BATTLE DOME - 残り: ${Math.max(0, mis.tg - mis.cur).toFixed(1)}s\nTOTAL DMG: ${Math.floor(totalDamage)}`;
+    if(stg === 17 || stg === 27) {
+        mis.cur = time; document.getElementById('mission-text').innerText = `${stg===17?'BATTLE DOME':'GUERRILLA'} - 残り: ${Math.max(0, mis.tg - mis.cur).toFixed(1)}s\nTOTAL DMG: ${Math.floor(totalDamage)}`;
         if(mis.cur >= mis.tg && !mis.done) { mis.done = true; gameOver(`TIME UP!\nTOTAL DMG: ${Math.floor(totalDamage)}`, true); } return;
     }
 
@@ -447,7 +483,12 @@ class Player {
     handleSubWeapon(){
         this.subTimer++; const sLv = getTalentLevel('s'); const cd = subDB[this.sub].cd * Math.pow(0.9, sLv);
         if(this.sub === 'heal' && this.subTimer >= cd) { this.subTimer = 0; this.hp = Math.min(this.maxHp, this.hp + 20 + (sLv * 5)); emit(this.x, this.y, '#00ff00', 20, 2); playSFX('level'); } 
-        else if((keys['ShiftLeft'] || keys['ShiftRight']) && this.subTimer >= cd) { this.subTimer = 0; if(this.sub === 'dash') { this.dashTimer = 15 + (sLv * 2); emit(this.x, this.y, '#ffffff', 40, 10); playSFX('shoot'); } else if(this.sub === 'turret') { projs.push(new Proj(this.x, this.y, 0, { t: 'aim', spd: 0, p: 99, life: 300 + (sLv * 30), col: '#aaaaaa', isT: true }, 20 * this.atkMulti, 1)); } }
+        else if((keys['ShiftLeft'] || keys['ShiftRight']) && this.subTimer >= cd) { 
+            this.subTimer = 0; 
+            if(this.sub === 'dash') { this.dashTimer = 15 + (sLv * 2); emit(this.x, this.y, '#ffffff', 40, 10); playSFX('shoot'); } 
+            else if(this.sub === 'turret') { projs.push(new Proj(this.x, this.y, 0, { t: 'aim', spd: 0, p: 99, life: 300 + (sLv * 30), col: '#aaaaaa', isT: true }, 20 * this.atkMulti, 1)); }
+            else if(this.sub === 'doll') { projs.push(new Proj(this.x, this.y, 0, { t: 'doll', spd: 0, p: 99, life: 300 + (sLv * 60), col: '#ff88cc', isT: false, size: 15 }, 0, 1)); playSFX('shoot'); }
+        }
     }
     draw(c){
         if(heliAnim.active) return;
@@ -458,55 +499,80 @@ class Player {
         c.fillStyle = '#ff0000'; c.fillRect(this.x - 20, this.y + 25, 40, 5); c.fillStyle = '#00ff00'; c.fillRect(this.x - 20, this.y + 25, 40 * (this.hp / this.maxHp), 5);
     }
     addXp(v){
-        gXp += v * (1 + getTalentLevel('u') * 0.1); if(gXp >= gMaxXp) { gXp -= gMaxXp; gLv++; gMaxXp = Math.floor(gMaxXp * 1.3); save('lv', gLv); save('maxxp', gMaxXp); gTP++; save('tp', gTP); document.getElementById('level-text').innerText = gLv; triggerLvUp(); }
+        gXp += v * (1 + getTalentLevel('u') * 0.1); 
+        if(gXp >= gMaxXp) { 
+            gXp -= gMaxXp; gLv++; gBoxes++; gMaxXp = Math.floor(gMaxXp * 1.3); 
+            save('lv', gLv); save('boxes', gBoxes); save('boxcl', gLv); save('maxxp', gMaxXp); gTP++; save('tp', gTP); 
+            document.getElementById('level-text').innerText = gLv; triggerLvUp(); 
+        }
         save('xp', gXp); document.getElementById('xp-bar').style.width = `${(gXp / gMaxXp) * 100}%`;
     }
 }
 
 class Enemy {
     constructor(t, x, y, hm, sm){
-        this.t = t; this.x = x; this.y = y; const b = eDB[t]; const loopHP = 1 + (gWeek - 1) * 0.5; const loopSPD = 1 + (gWeek - 1) * 0.1;
+        this.t = t; this.x = x; this.y = y; const b = eDB[t]; 
+        // バトルドーム (stg17) は周回強化無効
+        const loopHP = (stg === 17) ? 1 : 1 + (gWeek - 1) * 0.5; 
+        const loopSPD = (stg === 17) ? 1 : 1 + (gWeek - 1) * 0.1;
         this.hp = b.h * hm * loopHP; this.mhp = this.hp; this.spd = b.s * sm * loopSPD; this.c = b.c; this.r = b.r; this.tm = 0;
     }
     update(){
-        this.tm++; const a = Math.atan2(player.y - this.y, player.x - this.x); const d = dist(this.x, this.y, player.x, player.y);
-        this.x += Math.cos(a) * this.spd; this.y += Math.sin(a) * this.spd; resolveCollision(this);
+        this.tm++; 
         
-        // ボス発狂
-        if((this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'g_zombie' || this.t === 'g_oni') && this.hp < this.mhp / 2 && this.tm % 60 === 0) {
-            playSFX('shoot'); const ways = (this.t === 'maou' || this.t === 'true_maou') ? 16 : 8;
+        // デコイ（身代わり人形）の探知
+        let tx = player.x, ty = player.y;
+        let doll = projs.find(p => p.t === 'doll');
+        if(doll) { tx = doll.x; ty = doll.y; }
+        
+        const a = Math.atan2(ty - this.y, tx - this.x); 
+        const d = dist(this.x, this.y, player.x, player.y);
+        
+        if(this.t === 'warp_z' && this.tm % 180 === 0) {
+            emit(this.x, this.y, this.c, 10, 2);
+            this.x = player.x + (Math.random()-0.5)*400; this.y = player.y + (Math.random()-0.5)*400;
+            emit(this.x, this.y, this.c, 10, 2);
+        } else {
+            this.x += Math.cos(a) * this.spd; this.y += Math.sin(a) * this.spd; resolveCollision(this);
+        }
+        
+        if((this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'future_maou' || this.t === 'g_zombie' || this.t === 'g_oni') && this.hp < this.mhp / 2 && this.tm % 60 === 0) {
+            playSFX('shoot'); const ways = (this.t === 'maou' || this.t === 'true_maou' || this.t === 'future_maou') ? 16 : 8;
             for(let i=0; i<ways; i++) { projs.push(new Proj(this.x, this.y, (Math.PI*2/ways)*i + this.tm, {t:'aim', spd:5, col:'#ff00ff', isE:true}, 20, 1)); }
         }
         
-        // 接触
         if(d < this.r + player.r && !heliAnim.active) {
-            player.hp -= (this.t === 'g_zombie' || this.t === 'maou' || this.t === 'g_oni' || this.t === 'true_maou') ? 20 : 5;
+            player.hp -= (this.t === 'g_zombie' || this.t === 'maou' || this.t === 'g_oni' || this.t === 'true_maou' || this.t === 'future_maou') ? 20 : 5;
             if(player.hp <= 0) gameOver("GAME OVER", false);
-            this.x -= Math.cos(a) * 20; this.y -= Math.sin(a) * 20;
+            this.x -= Math.cos(Math.atan2(player.y - this.y, player.x - this.x)) * 20; 
+            this.y -= Math.sin(Math.atan2(player.y - this.y, player.x - this.x)) * 20;
         }
     }
     draw(c){
         c.beginPath(); c.arc(this.x, this.y, this.r, 0, Math.PI*2);
-        if(this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'g_zombie' || this.t === 'g_oni') { c.shadowBlur = 20; c.shadowColor = this.c; }
+        if(this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'future_maou' || this.t === 'g_zombie' || this.t === 'g_oni') { c.shadowBlur = 20; c.shadowColor = this.c; }
         c.fillStyle = this.c; c.fill(); c.shadowBlur = 0;
     }
     takeDmg(amt){
-        this.hp -= amt; if(stg === 17) totalDamage += amt; dmgs.push({x: this.x, y: this.y, t: Math.floor(amt), l: 20});
+        this.hp -= amt; if(stg === 17 || stg === 27) totalDamage += amt; dmgs.push({x: this.x, y: this.y, t: Math.floor(amt), l: 20});
         
         if(this.hp <= 0) {
-            emit(this.x, this.y, this.c, (this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'g_zombie' || this.t === 'g_oni') ? 50 : 10); playSFX('hit'); 
+            if(this.t === 'bomb_z') {
+                emit(this.x, this.y, '#ff0000', 30, 8); playSFX('explode'); shake = 10;
+                if(dist(this.x, this.y, player.x, player.y) < 100 && !heliAnim.active) { player.hp -= 30; if(player.hp <= 0) gameOver("GAME OVER", false); }
+                enemies.forEach(e2 => { if(e2 !== this && dist(this.x, this.y, e2.x, e2.y) < 100) e2.takeDmg(50); });
+            } else {
+                emit(this.x, this.y, this.c, (this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'future_maou' || this.t === 'g_zombie' || this.t === 'g_oni') ? 50 : 10); playSFX('hit'); 
+            }
+            
             player.en = Math.min(player.mEn, player.en + 1); document.getElementById('energy-bar').style.width = `${(player.en / player.mEn) * 100}%`;
             
-            // 無限復活ゾンビの処理: ダミーエフェクトを出して復活する
-            if(this.t === 'undead') {
-                setTimeout(() => { if(state === 'play') enemies.push(new Enemy('undead', this.x, this.y, 1, 1)); }, 3000);
-            }
-
+            if(this.t === 'undead') { setTimeout(() => { if(state === 'play') enemies.push(new Enemy('undead', this.x, this.y, 1, 1)); }, 3000); }
             if(mis.t === 'kill' && !mis.done) mis.cur++;
-            if(mis.t === 'boss' && !mis.done && (this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'g_zombie' || this.t === 'g_oni')) mis.cur++;
+            if(mis.t === 'boss' && !mis.done && (this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'future_maou' || this.t === 'g_zombie' || this.t === 'g_oni')) mis.cur++;
             
             const expVal = eDB[this.t].x || 2;
-            if(this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'g_zombie' || this.t === 'g_oni') { gCoins += 100; for(let i=0; i<10; i++) items.push({x: this.x + (Math.random()-0.5)*50, y: this.y + (Math.random()-0.5)*50, t: 'xp', v: expVal}); } 
+            if(this.t === 'boss' || this.t === 'maou' || this.t === 'true_maou' || this.t === 'future_maou' || this.t === 'g_zombie' || this.t === 'g_oni') { gCoins += 100; for(let i=0; i<10; i++) items.push({x: this.x + (Math.random()-0.5)*50, y: this.y + (Math.random()-0.5)*50, t: 'xp', v: expVal}); } 
             else { if(Math.random() < 0.05) items.push({x: this.x, y: this.y, t: 'c'}); else items.push({x: this.x, y: this.y, t: 'xp', v: expVal}); }
             return true;
         }
@@ -515,18 +581,35 @@ class Enemy {
 }
 
 class Proj {
-    constructor(x, y, a, d, dmg, lv){ this.x = x; this.y = y; this.t = d.t; this.vx = Math.cos(a) * (d.spd || 0); this.vy = Math.sin(a) * (d.spd || 0); this.dmg = dmg; this.p = d.p || 1; this.c = d.col; this.blast = d.blast; this.life = d.life || 120; this.hit = new Set(); this.sz = d.size || 6; this.isT = d.isT; this.isE = d.isE; this.tm = 0; }
+    constructor(x, y, a, d, dmg, lv){ this.x = x; this.y = y; this.t = d.t; this.vx = Math.cos(a) * (d.spd || 0); this.vy = Math.sin(a) * (d.spd || 0); this.dmg = dmg; this.p = d.p || 1; this.c = d.col; this.blast = d.blast; this.life = d.life || 120; this.hit = new Set(); this.sz = d.size || 6; this.isT = d.isT; this.isE = d.isE; this.freeze = d.freeze; this.tm = 0; }
     update(){
-        if(this.t === 'return') { this.vx *= 0.95; this.vy *= 0.95; if(this.life < 60) { const a = Math.atan2(player.y - this.y, player.x - this.x); this.vx += Math.cos(a) * 0.8; this.vy += Math.sin(a) * 0.8; } } else if(this.t === 'wave') { this.sz += this.vx; this.vx *= 0.98; } else if(this.t === 'pull') { emit(this.x, this.y, this.c, 1, 1); enemies.forEach(e => { if(dist(this.x, this.y, e.x, e.y) < 250) { e.x -= (e.x - this.x) * 0.03; e.y -= (e.y - this.y) * 0.03; } }); } else { this.x += this.vx; this.y += this.vy; }
+        if(this.t === 'return') { this.vx *= 0.95; this.vy *= 0.95; if(this.life < 60) { const a = Math.atan2(player.y - this.y, player.x - this.x); this.vx += Math.cos(a) * 0.8; this.vy += Math.sin(a) * 0.8; } } 
+        else if(this.t === 'doll') { /* 動かない */ }
+        else if(this.t === 'wave') { this.sz += this.vx; this.vx *= 0.98; } 
+        else if(this.t === 'pull') { emit(this.x, this.y, this.c, 1, 1); enemies.forEach(e => { if(dist(this.x, this.y, e.x, e.y) < 250) { e.x -= (e.x - this.x) * 0.03; e.y -= (e.y - this.y) * 0.03; } }); } 
+        else { this.x += this.vx; this.y += this.vy; }
+        
         if(this.isT && ++this.tm > 20) { this.tm = 0; let tg = null, md = 400; enemies.forEach(e => { let di = dist(this.x, this.y, e.x, e.y); if(di < md) { md = di; tg = e; } }); if(tg) { projs.push(new Proj(this.x, this.y, Math.atan2(tg.y - this.y, tg.x - this.x), {t:'aim', spd:15, col:'#ffff00', p:1}, this.dmg, 1)); playSFX('shoot'); } }
         this.life--;
+        
         if(this.isE) { if(!heliAnim.active && dist(this.x, this.y, player.x, player.y) < this.sz + player.r) { player.hp -= this.dmg; if(player.hp <= 0) gameOver("GAME OVER", false); this.life = 0; } return; }
+        
+        if(this.t === 'doll') return; // 人形は敵との当たり判定を無視(時間経過で消滅)
         if(this.t === 's_blast' && this.life % 10 !== 0) return;
-        for(let i=enemies.length-1; i>=0; i--){ let e = enemies[i]; let d = (this.t === 'wave') ? Math.abs(dist(this.x, this.y, e.x, e.y) - this.sz) : dist(this.x, this.y, e.x, e.y); let hr = (this.t === 'wave') ? 15 : this.sz + (e.r || 12); if(!this.hit.has(e) && d < hr) { if(this.blast) { shake = 8; emit(this.x, this.y, this.c, 30, 10); playSFX('explode'); enemies.forEach(e2 => { if(dist(this.x, this.y, e2.x, e2.y) < this.blast) e2.takeDmg(this.dmg); }); this.life = 0; break; } else { this.hit.add(e); e.takeDmg(this.dmg); this.p--; if(this.p <= 0) this.life = 0; } } }
+        
+        for(let i=enemies.length-1; i>=0; i--){ let e = enemies[i]; let d = (this.t === 'wave') ? Math.abs(dist(this.x, this.y, e.x, e.y) - this.sz) : dist(this.x, this.y, e.x, e.y); let hr = (this.t === 'wave') ? 15 : this.sz + (e.r || 12); if(!this.hit.has(e) && d < hr) { 
+            if(this.freeze) e.spd = Math.max(0.5, e.spd * 0.9); 
+            if(this.blast) { shake = 8; emit(this.x, this.y, this.c, 30, 10); playSFX('explode'); enemies.forEach(e2 => { if(dist(this.x, this.y, e2.x, e2.y) < this.blast) e2.takeDmg(this.dmg); }); this.life = 0; break; } 
+            else { this.hit.add(e); e.takeDmg(this.dmg); this.p--; if(this.p <= 0) this.life = 0; } 
+        } }
     }
     draw(c){
         c.shadowBlur = 10; c.shadowColor = this.c;
-        if(this.t === 'wave') { c.beginPath(); c.arc(this.x, this.y, this.sz, 0, Math.PI*2); c.strokeStyle = this.c; c.lineWidth = 4; c.stroke(); } else if(this.t === 'pull') { c.beginPath(); c.arc(this.x, this.y, 25 + Math.random()*15, 0, Math.PI*2); c.fillStyle = '#000'; c.fill(); c.strokeStyle = this.c; c.lineWidth = 3; c.stroke(); } else if(this.t === 's_blast') { c.fillStyle = this.c; c.globalAlpha = this.isE ? 0.6 : 1; c.fillRect(this.x - this.sz, this.y - this.sz, this.sz*2, this.sz*2); c.globalAlpha = 1; } else { c.beginPath(); c.arc(this.x, this.y, this.sz, 0, Math.PI*2); c.fillStyle = this.c; c.fill(); }
+        if(this.t === 'wave') { c.beginPath(); c.arc(this.x, this.y, this.sz, 0, Math.PI*2); c.strokeStyle = this.c; c.lineWidth = 4; c.stroke(); } 
+        else if(this.t === 'pull') { c.beginPath(); c.arc(this.x, this.y, 25 + Math.random()*15, 0, Math.PI*2); c.fillStyle = '#000'; c.fill(); c.strokeStyle = this.c; c.lineWidth = 3; c.stroke(); } 
+        else if(this.t === 's_blast') { c.fillStyle = this.c; c.globalAlpha = this.isE ? 0.6 : 1; c.fillRect(this.x - this.sz, this.y - this.sz, this.sz*2, this.sz*2); c.globalAlpha = 1; } 
+        else if(this.t === 'doll') { c.beginPath(); c.arc(this.x, this.y, this.sz, 0, Math.PI*2); c.fillStyle = this.c; c.fill(); c.fillStyle = '#000'; c.font = '14px Arial'; c.fillText('D', this.x-5, this.y+5); }
+        else { c.beginPath(); c.arc(this.x, this.y, this.sz, 0, Math.PI*2); c.fillStyle = this.c; c.fill(); }
         c.shadowBlur = 0;
     }
 }
@@ -538,10 +621,7 @@ function startGame(s){
     initAudio(); stg = s; document.getElementById('stage-text').innerText = s;
     document.getElementById('fade-screen').style.opacity = '0'; document.getElementById('fade-screen').style.display = 'none';
     document.getElementById('home-screen').style.display = 'none'; document.getElementById('ui-layer').style.display = 'block';
-    
-    state = 'play'; lt = performance.now(); time = 0; 
-    enemies.length = 0; items.length = 0; projs.length = 0; parts.length = 0; playerTrails.length = 0; dmgs.length = 0;
-    
+    state = 'play'; lt = performance.now(); time = 0; enemies.length = 0; items.length = 0; projs.length = 0; parts.length = 0; playerTrails.length = 0; dmgs.length = 0;
     player = new Player(); initMap(s);
     document.getElementById('level-text').innerText = gLv; document.getElementById('xp-bar').style.width = `${(gXp / gMaxXp) * 100}%`;
     requestAnimationFrame(loop);
@@ -568,36 +648,34 @@ let finalScoreImageBlob = null;
 function gameOver(title, isClear){
     state = 'over'; document.getElementById('ui-layer').style.display = 'none';
     if(isClear){
-        if(stg >= maxStg && maxStg < 16 && stg !== 17 && stg !== 18){ maxStg = stg + 1; save('ms', maxStg); }
-        if(stg === 16) { gWeek++; save('week', gWeek); } // 16ステージクリアで周回カウント
+        if(stg >= maxStg && maxStg < 26 && stg !== 17 && stg !== 18 && stg !== 27){ maxStg = stg + 1; save('ms', maxStg); }
+        if(stg === 16 || stg === 26) { gWeek++; save('week', gWeek); } 
         document.getElementById('go-title').style.color = '#00ffcc'; document.getElementById('go-title').style.textShadow = '0 0 20px #00ffcc';
     } else { document.getElementById('go-title').style.color = '#ff3333'; document.getElementById('go-title').style.textShadow = '0 0 20px #ff0000'; }
     document.getElementById('go-title').innerText = title; 
+    
     let resText = `Clear Time: ${Math.floor(time/60)}:${Math.floor(time%60).toString().padStart(2,'0')} (Stage ${stg})`;
-    if(stg === 17) resText = title; // バトルドームはタイトルにスコアが入る
+    
+    if(stg === 17 || stg === 27) {
+        let score = Math.floor(totalDamage);
+        resText = title + `\nScore: ${score}`;
+        if(stg === 17) {
+            if(score > gBestScore) { gBestScore = score; save('bestScore', gBestScore); resText += `\n★ NEW RECORD! ★`; }
+            resText += `\nBEST: ${gBestScore}`;
+        }
+    } 
     document.getElementById('survival-time').innerText = resText;
     
-    // スコア画像を生成して保存
     canvas.toBlob((blob) => { finalScoreImageBlob = blob; }, 'image/png');
-
     document.getElementById('fade-screen').style.opacity = '0'; setTimeout(() => { document.getElementById('game-over-screen').style.display = 'flex'; }, 500);
 }
 
-// 画像付きシェア機能
 async function shareScore() {
     const text = document.getElementById('survival-time').innerText;
     if (navigator.share && finalScoreImageBlob) {
         const file = new File([finalScoreImageBlob], 'score.png', { type: 'image/png' });
-        try {
-            await navigator.share({
-                title: 'Survive the Swarm V8',
-                text: `Survive the Swarm V8 プレイ結果\n${text}\n#SurviveTheSwarm`,
-                files: [file]
-            });
-        } catch(e) { console.error(e); }
-    } else {
-        alert("お使いの端末・ブラウザは画像シェア機能に対応していません。");
-    }
+        try { await navigator.share({ title: 'Survive the Swarm V9.1', text: `Survive the Swarm V9.1 プレイ結果\n${text}\n#SurviveTheSwarm`, files: [file] }); } catch(e) { console.error(e); }
+    } else { alert("お使いの端末・ブラウザは画像シェア機能に対応していません。"); }
 }
 
 function drawArrow(tx, ty, col) {
@@ -617,25 +695,29 @@ function loop(ts){
     player.update(); cam.x = player.x - canvas.width/2; cam.y = player.y - canvas.height/2; 
     checkMission();
 
-    let currentBoss = enemies.find(e => e.t === 'boss' || e.t === 'maou' || e.t === 'true_maou' || e.t === 'g_zombie' || e.t === 'g_oni');
+    let currentBoss = enemies.find(e => e.t === 'boss' || e.t === 'maou' || e.t === 'true_maou' || e.t === 'future_maou' || e.t === 'g_zombie' || e.t === 'g_oni');
     if(currentBoss) { document.getElementById('boss-ui').style.display = 'block'; document.getElementById('boss-name').innerText = eDB[currentBoss.t].n || 'BOSS'; document.getElementById('boss-hp-bar').style.width = (currentBoss.hp / currentBoss.mhp * 100) + '%'; } 
     else { document.getElementById('boss-ui').style.display = 'none'; }
 
     eT += dt; 
-    const spawnRate = (0.5-(time/200)-(stg*0.02)) * Math.pow(0.88, gWeek-1);
+    // バトルドームは周回倍率を無視
+    const weekMult = (stg === 17) ? 1 : Math.pow(0.88, gWeek-1);
+    const spawnRate = (0.5-(time/200)-(stg*0.02)) * weekMult;
+    
     if(eT > spawnRate && !heliAnim.active){
         const a = Math.random() * Math.PI * 2; const r = canvas.width / 1.1; let t = 'zako', rnd = Math.random();
         
-        if(stg === 17) { // バトルドームは全敵が出現
+        if(stg === 17) {
             if(rnd < 0.01) t = 'true_maou'; else if(rnd < 0.03) t = 'maou'; else if(rnd < 0.05) t = 'g_zombie'; else if(rnd < 0.1) t = 'boss'; else if(rnd < 0.2) t = 'oni'; else if(rnd < 0.3) t = 'undead'; else if(rnd < 0.4) t = 'ninja'; else if(rnd < 0.5) t = 'slime'; else if(rnd < 0.7) t = 'mid';
-        } else if(stg === 18) { // 隠しステージ: 鬼と無限復活のみの超難易度
+        } else if(stg === 27) { 
+            t = rnd < 0.3 ? 'mid' : 'slime';
+        } else if(stg === 18) { 
             if(rnd < 0.3) t = 'oni'; else if(rnd < 0.6) t = 'undead'; else if(rnd < 0.8) t = 'ninja';
+        } else if(stg >= 19 && stg <= 26) { 
+            if(rnd < 0.2) t = 'warp_z'; else if(rnd < 0.4) t = 'bomb_z'; else if(rnd < 0.6) t = 'ninja'; else if(rnd < 0.8) t = 'oni'; else t = 'slime';
         } else {
-            if(stg >= 2 && rnd < 0.3) t = 'mid'; 
-            if(stg >= 4 && rnd < 0.2) t = 'ninja'; 
-            if(stg >= 6 && rnd < 0.3) t = 'slime';
-            if(stg >= 9 && rnd < 0.2) t = 'oni'; // ステージ9以降は鬼出現
-            if(stg >= 11 && rnd < 0.2) t = 'undead'; // ステージ11以降は無限復活出現
+            if(stg >= 2 && rnd < 0.3) t = 'mid'; if(stg >= 4 && rnd < 0.2) t = 'ninja'; if(stg >= 6 && rnd < 0.3) t = 'slime';
+            if(stg >= 9 && rnd < 0.2) t = 'oni'; if(stg >= 11 && rnd < 0.2) t = 'undead'; 
         }
         enemies.push(new Enemy(t, player.x + Math.cos(a)*r, player.y + Math.sin(a)*r, 1 + (stg * 0.2), 1 + (time / 300))); eT = 0;
     }
@@ -700,7 +782,7 @@ function loop(ts){
     mCtx.clearRect(0, 0, 160, 160); const mS = 0.04; mCtx.save(); mCtx.translate(80, 80);
     walls.forEach(w => { mCtx.fillStyle = '#555'; mCtx.fillRect((w.x - player.x)*mS, (w.y - player.y)*mS, w.w*mS, w.h*mS); });
     if(heli.act){ mCtx.fillStyle = '#0f0'; mCtx.beginPath(); mCtx.arc((heli.x - player.x)*mS, (heli.y - player.y)*mS, 6, 0, Math.PI*2); mCtx.fill(); }
-    enemies.forEach(e => { mCtx.fillStyle = (e.t === 'boss' || e.t === 'maou' || e.t === 'true_maou' || e.t === 'g_zombie' || e.t === 'g_oni') ? '#ff0000' : '#ff8888'; mCtx.fillRect((e.x - player.x)*mS, (e.y - player.y)*mS, 4, 4); });
+    enemies.forEach(e => { mCtx.fillStyle = (e.t === 'boss' || e.t === 'maou' || e.t === 'true_maou' || e.t === 'future_maou' || e.t === 'g_zombie' || e.t === 'g_oni') ? '#ff0000' : '#ff8888'; mCtx.fillRect((e.x - player.x)*mS, (e.y - player.y)*mS, 4, 4); });
     mCtx.fillStyle = '#fff'; mCtx.beginPath(); mCtx.arc(0, 0, 3, 0, Math.PI*2); mCtx.fill(); mCtx.restore();
 }
 </script>
